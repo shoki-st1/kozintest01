@@ -105,12 +105,13 @@ namespace kozintest01
 
         }
 
+        //追加ボタン
         private void AddButton_Click(object sender,EventArgs e)
         {
 
         }
 
-
+        //削除ボタン
         private void DeleteButton_Click(object sender, EventArgs e)
         {
 
