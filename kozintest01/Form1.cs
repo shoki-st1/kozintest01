@@ -8,15 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+
 namespace kozintest01
 {
     public partial class Form1 : Form
     {
         //いるもの
-        //ボタン
+        //追加ボタン,削除
         private Button AddButton,DeleteButton;
-        //ラベル
+
+        //時間表示ラベル
         private Label TimeDis;
+        //タイマー
+        Timer DateTimer;
+
+        //表(一覧表示)
+        private DataGridView ScheduleDis;
 
         //現在時刻
         static DateTime date = DateTime.Now;
