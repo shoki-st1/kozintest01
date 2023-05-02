@@ -36,10 +36,43 @@ namespace kozintest01
         public Form1()
         {
             InitializeComponent();
+
+            this.Load += Form1_Load;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Width = 500;
+            this.Height = 600;
+
+            //formサイズの指定
+            this.MaximumSize = new Size(600,700);
+            this.MinimumSize = new Size(400, 500);
+
+
+
+            //設定
+            //追加ボタン
+            this.AddButton = new Button();
+            //オブジェクト名
+            this.AddButton.Name = "Add";
+            this.AddButton.Text = "追加";
+            this.AddButton.Font = new Font("UTF-8",10);
+            this.AddButton.TextAlign = ContentAlignment.TopCenter;
+            //位置
+            this.AddButton.Location = ();
+
+
+            //削除ボタン
+            this.DeleteButton = new Button();
+            //オブジェクト名
+            this.DeleteButton.Name = "Delete";
+            this.DeleteButton.Text = "削除";
+            this.AddButton.Font = new Font("UTF-8", 10);
+            this.AddButton.TextAlign = ContentAlignment.TopCenter;
+            this.DeleteButton.Location = ();
+
+
 
         }
     }
