@@ -14,9 +14,11 @@ namespace kozintest01
 {
     public partial class Form1 : Form
     {
-        //いるもの
+        //定義の宣言
         //追加ボタン,削除
         private Button AddButton,DeleteButton;
+        //テキストボックス名前、優先度、期限
+        private TextBox name,rank,finish;
 
         //時間表示ラベル
         private Label TimeDis;
