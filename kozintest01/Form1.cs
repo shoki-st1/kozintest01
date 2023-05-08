@@ -23,9 +23,16 @@ namespace kozintest01
 
         //時間表示ラベル
         private Label TimeDis;
+        //時間ボタン
+        //日付進める
+        private Button AddtimeButton;
+        //日付戻る
+        private Button DeltimeButton;
+
 
         //タイマー
         Timer DateTimer;
+        
 
         //表(一覧表示)
         private DataGridView ScheduleDis;
@@ -105,18 +112,50 @@ namespace kozintest01
             this.ResumeLayout(false);
 
             //テキストボックス
-        //入力テキストボックス
-            
-
-
-        //表示
+            //入力テキストボックス
 
 
 
-        //時間ラベル
+            //表示
 
 
-        
+
+            //時間ラベル
+            /*
+           //時間表示ラベル
+            private Label TimeDis;
+            //日付進める
+            private Button AddtimeButton;
+            //日付戻る
+            private Button DeltimeButton;
+             */
+
+
+            //時間進める
+            AddtimeButton = new System.Windows.Forms.Button();
+            AddtimeButton.FlatStyle = FlatStyle.Flat;
+            AddtimeButton.FlatAppearance.BorderSize= 0;
+
+            AddtimeButton.FlatAppearance.MouseOverBackColor = Color.Gray;
+            AddtimeButton.FlatAppearance.MouseDownBackColor= Color.WhiteSmoke;
+
+            this.AddtimeButton.Name = "Addtime";
+            this.AddtimeButton.Text = "＞";
+            this.AddtimeButton.Font = new Font("UTF-8", 10);
+            this.DeleteButton.TextAlign = ContentAlignment.TopCenter;
+            //位置
+            this.DeleteButton.Location = new Point(300, 400);
+            //ボタン大きさ
+            this.DeleteButton.Size = new System.Drawing.Size(50, 30);
+
+            this.DeleteButton.Click += new EventHandler(this.DeleteButton_Click);
+            this.DeleteButton.Parent = this;
+            this.DeleteButton.BringToFront();
+            this.ResumeLayout(false);
+
+
+            //時間戻す
+            DeltimeButton = new System.Windows.Forms.Button();
 
         }
 
