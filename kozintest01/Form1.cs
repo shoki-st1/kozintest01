@@ -54,6 +54,7 @@ namespace kozintest01
 
 
             //設定
+            //ボタン
         //追加ボタン
             AddButton = new System.Windows.Forms.Button();
             AddButton.FlatStyle = FlatStyle.Flat;
@@ -102,6 +103,20 @@ namespace kozintest01
             this.DeleteButton.Parent = this;
             this.DeleteButton.BringToFront();
             this.ResumeLayout(false);
+
+            //テキストボックス
+        //入力テキストボックス
+            
+
+
+        //表示
+
+
+
+        //時間ラベル
+
+
+        
 
         }
 
