@@ -142,34 +142,68 @@ namespace kozintest01
             this.AddtimeButton.Name = "Addtime";
             this.AddtimeButton.Text = "＞";
             this.AddtimeButton.Font = new Font("UTF-8", 10);
-            this.DeleteButton.TextAlign = ContentAlignment.TopCenter;
+            this.AddtimeButton.TextAlign = ContentAlignment.TopCenter;
             //位置
-            this.DeleteButton.Location = new Point(300, 400);
+            this.AddtimeButton.Location = new Point(300, 0);
             //ボタン大きさ
-            this.DeleteButton.Size = new System.Drawing.Size(50, 30);
+            this.AddtimeButton.Size = new System.Drawing.Size(50, 30);
 
-            this.DeleteButton.Click += new EventHandler(this.DeleteButton_Click);
-            this.DeleteButton.Parent = this;
-            this.DeleteButton.BringToFront();
+            this.AddtimeButton.Click += new EventHandler(this.AddtimeButton_Click);
+            this.AddtimeButton.Parent = this;
+            this.AddtimeButton.BringToFront();
             this.ResumeLayout(false);
 
 
             //時間戻す
             DeltimeButton = new System.Windows.Forms.Button();
+            DeltimeButton.FlatStyle = FlatStyle.Flat;
+            DeltimeButton.FlatAppearance.BorderSize = 0;
+
+            DeltimeButton.FlatAppearance.MouseOverBackColor = Color.Gray;
+            DeltimeButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+
+            this.DeltimeButton.Name = "Deltime";
+            this.DeltimeButton.Text = "＜";
+            this.DeltimeButton.Font = new Font("UTF-8", 10);
+            this.DeltimeButton.TextAlign = ContentAlignment.TopCenter;
+            //位置
+            this.DeltimeButton.Location = new Point(100, 0);
+            //ボタン大きさ
+            this.DeltimeButton.Size = new System.Drawing.Size(50, 30);
+
+            this.DeltimeButton.Click += new EventHandler(this.DeltimeButton_Click);
+            this.DeltimeButton.Parent = this;
+            this.DeltimeButton.BringToFront();
+            this.ResumeLayout(false);
 
         }
 
-        //追加ボタン
+        //予定追加ボタン
         private void AddButton_Click(object sender,EventArgs e)
         {
 
         }
 
-        //削除ボタン
+        //予定削除ボタン
         private void DeleteButton_Click(object sender, EventArgs e)
         {
 
         }
+
+        //時間進める
+        private void AddtimeButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        //時間戻す
+        private void DeltimeButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
 
     }
 }
