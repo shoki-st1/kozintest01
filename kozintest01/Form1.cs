@@ -140,22 +140,14 @@ namespace kozintest01
             private Button DeltimeButton;
              */
 
-            //作成
-            TimeDis = new System.Windows.Forms.Label();
-
-            //現在の時間を表示させる
-            TimeDis.Text = "時間";
-            //フォント
-            TimeDis.Font = new Font("UTF-8", 10);
-
-
-
-
 
             //時間進めるボタン
             AddtimeButton = new System.Windows.Forms.Button();
             AddtimeButton.FlatStyle = FlatStyle.Flat;
             AddtimeButton.FlatAppearance.BorderSize= 0;
+            
+            AddtimeButton.FlatAppearance.BorderColor = Color.Black;
+            
 
             AddtimeButton.FlatAppearance.MouseOverBackColor = Color.Gray;
             AddtimeButton.FlatAppearance.MouseDownBackColor= Color.WhiteSmoke;
@@ -165,6 +157,7 @@ namespace kozintest01
             this.AddtimeButton.Text = "＞";
             this.AddtimeButton.Font = new Font("UTF-8", 10);
             this.AddtimeButton.TextAlign = ContentAlignment.MiddleCenter;
+
 
             //ボタン大きさ
             this.AddtimeButton.Size = new System.Drawing.Size(70, 70);
@@ -177,6 +170,7 @@ namespace kozintest01
             this.AddtimeButton.Parent = this;
             this.AddtimeButton.BringToFront();
             this.ResumeLayout(false);
+            this.Controls.Add(this.AddtimeButton);
 
 
             //時間戻す
@@ -204,6 +198,32 @@ namespace kozintest01
             this.DeltimeButton.Parent = this;
             this.DeltimeButton.BringToFront();
             this.ResumeLayout(false);
+            this.Controls.Add(DeltimeButton);
+
+
+
+
+            //時間表示ラベル
+            //作成
+            TimeDis = new System.Windows.Forms.Label();
+
+            //現在の時間を表示させる
+            TimeDis.Text = "時間";
+            //フォント
+            TimeDis.Font = new Font("UTF-8", 10);
+
+            //枠に色をつける
+            TimeDis.BorderStyle = BorderStyle.FixedSingle;
+            //色
+            TimeDis.ForeColor = Color.Black;
+
+            //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
+            TimeDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + AddtimeButton.Width),70);
+            //位置(DeltimeButtonの横幅を足した位置)
+            TimeDis.Location = new Point(0 + DeltimeButton.Width,0);
+
+            //formに追加
+            this.Controls.Add(TimeDis);
 
         }
 
@@ -220,14 +240,14 @@ namespace kozintest01
         }
 
         //時間進める
-        private void AddtimeButton_Click(object sender, EventArgs e)
+        public void AddtimeButton_Click(object sender, EventArgs e)
         {
 
         }
 
 
         //時間戻す
-        private void DeltimeButton_Click(object sender, EventArgs e)
+        public void DeltimeButton_Click(object sender, EventArgs e)
         {
 
         }
