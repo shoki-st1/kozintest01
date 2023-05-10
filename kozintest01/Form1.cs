@@ -71,6 +71,7 @@ namespace kozintest01
             this.MinimumSize = new Size(450, 500);
 
 
+            //---------------------------------------------------------------------------------------------
             //ボタン
             //追加ボタン
             AddButton = new System.Windows.Forms.Button();
@@ -100,6 +101,8 @@ namespace kozintest01
             this.ResumeLayout(false);
 
 
+
+            //--------------------------------------------------------------
             //削除ボタン
             DeleteButton = new System.Windows.Forms.Button();
             DeleteButton.FlatStyle = FlatStyle.Flat;
@@ -135,11 +138,12 @@ namespace kozintest01
                 DateTimePicker finish;
             */
 
+            //-------------------------------------------------------------------------------
             //名前入力テキストボックス
             name = new TextBox();
 
             name.Font = new Font("UTF-8", 10);
-            //size
+            //サイズ
             name.Size = new Size(120, 100);
             //位置
             name.Location = new Point(30,100);
@@ -148,7 +152,7 @@ namespace kozintest01
             this.Controls.Add(name);
 
 
-
+            //-------------------------------------------------------------------------
             //優先度
             //優先度選択のコンボボックス
             rank = new ComboBox();
@@ -173,7 +177,7 @@ namespace kozintest01
             //int selectedIndex = name.selectedIndex;
 
 
-
+            //-----------------------------------------------------------------------------
             //期限
             //期限選択
             finish = new DateTimePicker();
@@ -199,7 +203,7 @@ namespace kozintest01
             private Button DeltimeButton;
              */
 
-
+            //------------------------------------------------------------------------------
             //時間進めるボタン
             AddtimeButton = new System.Windows.Forms.Button();
             AddtimeButton.FlatStyle = FlatStyle.Flat;
@@ -232,6 +236,8 @@ namespace kozintest01
             this.Controls.Add(this.AddtimeButton);
 
 
+
+            //-------------------------------------------------------------------------------
             //時間戻す
             DeltimeButton = new System.Windows.Forms.Button();
             DeltimeButton.FlatStyle = FlatStyle.Flat;
@@ -241,7 +247,6 @@ namespace kozintest01
             DeltimeButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
 
             this.DeltimeButton.Name = "Deltime";
-
             this.DeltimeButton.Text = "＜";
             this.DeltimeButton.Font = new Font("UTF-8", 10);
             this.DeltimeButton.TextAlign = ContentAlignment.MiddleCenter;
