@@ -22,8 +22,14 @@ namespace kozintest01
         private Button AddButton,DeleteButton;
 
 
-        //テキストボックス名前、優先度、期限
-        private TextBox name,rank,finish;
+        /*テキストボックス名前、期限
+            コンボボックス優先度
+            期限選択
+        一列で表示
+        */
+        TextBox name;
+        ComboBox rank ;
+        DateTimePicker finish;
 
         //現在時間表示ラベル
         private Label TimeDis;
@@ -123,10 +129,63 @@ namespace kozintest01
 
 
 
-            //テキストボックス定義
+            //入力するものの定義
+            /*private TextBox name;
+                private ComboBox rank;
+                DateTimePicker finish;
+            */
+
             //名前入力テキストボックス
+            name = new TextBox();
+
+            name.Font = new Font("UTF-8", 10);
+            //size
+            name.Size = new Size(120, 100);
+            //位置
+            name.Location = new Point(30,100);
+
+            //form追加
+            this.Controls.Add(name);
 
 
+
+            //優先度
+            //優先度選択のコンボボックス
+            rank = new ComboBox();
+
+            rank.Font = new Font("UTF-8", 10);
+            //サイズ
+            rank.Size = new Size(40, 100);
+            //位置(名前の右上座標+10)
+            rank.Location = new Point(name.Location.X + name.Width + 10,100);
+            
+
+            //選択
+            rank.Items.Add("1");
+            rank.Items.Add("2");
+            rank.Items.Add("3");
+            rank.Items.Add("4");
+            rank.Items.Add("5");
+
+            this.Controls.Add(rank);
+
+            //選択されたアイテムの要素数
+            //int selectedIndex = name.selectedIndex;
+
+
+
+            //期限
+            //期限選択
+            finish = new DateTimePicker();
+
+            finish.Font = new Font("UTF-8", 10);
+            //サイズ
+            finish.Size = new Size(120,100);
+            //位置(優先度の右上座標+10)
+            finish.Location = new Point(rank.Location.X + rank.Width + 10,100);
+
+            //formに追加
+            this.Controls.Add(finish);
 
 
 
@@ -160,7 +219,7 @@ namespace kozintest01
 
 
             //ボタン大きさ
-            this.AddtimeButton.Size = new System.Drawing.Size(70, 70);
+            this.AddtimeButton.Size = new System.Drawing.Size(70, 60);
             //位置(formサイズからボタンの分を引いた値)
             this.AddtimeButton.Location = new Point(this.ClientSize.Width - AddtimeButton.Width, 0);
             
@@ -188,7 +247,7 @@ namespace kozintest01
             this.DeltimeButton.TextAlign = ContentAlignment.MiddleCenter;
 
             //ボタン大きさ
-            this.DeltimeButton.Size = new System.Drawing.Size(70, 70);
+            this.DeltimeButton.Size = new System.Drawing.Size(70, 60);
             //位置
             this.DeltimeButton.Location = new Point(0,0);
 
@@ -218,12 +277,15 @@ namespace kozintest01
             TimeDis.ForeColor = Color.Black;
 
             //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
-            TimeDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + AddtimeButton.Width),70);
+            TimeDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + AddtimeButton.Width),60);
             //位置(DeltimeButtonの横幅を足した位置)
             TimeDis.Location = new Point(0 + DeltimeButton.Width,0);
 
             //formに追加
             this.Controls.Add(TimeDis);
+
+
+
 
         }
 
