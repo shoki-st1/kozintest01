@@ -56,9 +56,6 @@ namespace kozintest01
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            AutoScaleMode = AutoScaleMode.None;
-
-
             //form指定
             this.Width = 450;
             this.Height = 500;
@@ -68,7 +65,6 @@ namespace kozintest01
             this.MinimumSize = new Size(450, 500);
 
 
-            //設定
             //ボタン
             //追加ボタン
             AddButton = new System.Windows.Forms.Button();
@@ -132,8 +128,6 @@ namespace kozintest01
 
 
 
-            //表示
-
 
 
             //時間ラベル
@@ -145,6 +139,17 @@ namespace kozintest01
             //日付戻る
             private Button DeltimeButton;
              */
+
+            //作成
+            TimeDis = new System.Windows.Forms.Label();
+
+            //現在の時間を表示させる
+            TimeDis.Text = "時間";
+            //フォント
+            TimeDis.Font = new Font("UTF-8", 10);
+
+
+
 
 
             //時間進めるボタン
@@ -161,10 +166,11 @@ namespace kozintest01
             this.AddtimeButton.Font = new Font("UTF-8", 10);
             this.AddtimeButton.TextAlign = ContentAlignment.MiddleCenter;
 
-            //位置
-            this.AddtimeButton.Location = new Point(380, 0);
             //ボタン大きさ
             this.AddtimeButton.Size = new System.Drawing.Size(70, 70);
+            //位置(formサイズからボタンの分を引いた値)
+            this.AddtimeButton.Location = new Point(this.ClientSize.Width - AddtimeButton.Width, 0);
+            
 
             //イベント
             this.AddtimeButton.Click += new EventHandler(this.AddtimeButton_Click);
@@ -186,10 +192,12 @@ namespace kozintest01
             this.DeltimeButton.Text = "＜";
             this.DeltimeButton.Font = new Font("UTF-8", 10);
             this.DeltimeButton.TextAlign = ContentAlignment.MiddleCenter;
-            //位置
-            this.DeltimeButton.Location = new Point(0, 0);
+
             //ボタン大きさ
             this.DeltimeButton.Size = new System.Drawing.Size(70, 70);
+            //位置
+            this.DeltimeButton.Location = new Point(0,0);
+
 
             //イベント
             this.DeltimeButton.Click += new EventHandler(this.DeltimeButton_Click);
