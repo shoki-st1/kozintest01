@@ -68,7 +68,7 @@ namespace kozintest01
 
             //form拡大縮小の指定
             this.MaximumSize = new Size(450,500);
-            this.MinimumSize = new Size(450, 500);
+            this.MinimumSize = new Size(450,500);
 
 
             //---------------------------------------------------------------------------------------------
@@ -78,6 +78,9 @@ namespace kozintest01
             AddButton.FlatStyle = FlatStyle.Flat;
             AddButton.FlatAppearance.BorderSize = 0;
 
+
+            //バックカラー
+            AddButton.BackColor = Color.OrangeRed;
             //マウスが通る、押す色
             AddButton.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
             AddButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
@@ -89,8 +92,8 @@ namespace kozintest01
             this.AddButton.Font = new Font("UTF-8",10);
             this.AddButton.TextAlign = ContentAlignment.TopCenter;
 
-            //位置
-            this.AddButton.Location = new Point(350,150);
+            //位置(formからボタン分と少し引く)
+            this.AddButton.Location = new Point(this.ClientSize.Width - AddButton.Width -20,150);
             //ボタン大きさ
             this.AddButton.Size = new System.Drawing.Size(50,30);
 
@@ -102,12 +105,14 @@ namespace kozintest01
 
 
 
-            //--------------------------------------------------------------
+            //-------------------------------------------------------------------------------------------------------
             //削除ボタン
             DeleteButton = new System.Windows.Forms.Button();
             DeleteButton.FlatStyle = FlatStyle.Flat;
             DeleteButton.FlatAppearance.BorderSize = 0;
 
+            //バックカラー
+            DeleteButton.BackColor = Color.LightBlue;
             //マウス押す、通る色
             DeleteButton.FlatAppearance.MouseOverBackColor= Color.Gray;
             DeleteButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
@@ -120,7 +125,7 @@ namespace kozintest01
             this.DeleteButton.TextAlign = ContentAlignment.TopCenter;
 
             //位置
-            this.DeleteButton.Location = new Point(350,450);
+            this.DeleteButton.Location = new Point(this.ClientSize.Width - DeleteButton.Width -20,400);
             //ボタン大きさ
             this.DeleteButton.Size = new System.Drawing.Size(50,30);
 
@@ -138,13 +143,13 @@ namespace kozintest01
                 DateTimePicker finish;
             */
 
-            //-------------------------------------------------------------------------------
+            //-------------------------------------------------------------------------------------------------------
             //名前入力テキストボックス
             name = new TextBox();
-
-            name.Font = new Font("UTF-8", 10);
+            //フォント
+            name.Font = new Font("UTF-8", 10); 
             //サイズ
-            name.Size = new Size(120, 100);
+            name.Size = new Size(170, 100);
             //位置
             name.Location = new Point(30,100);
 
@@ -152,12 +157,13 @@ namespace kozintest01
             this.Controls.Add(name);
 
 
-            //-------------------------------------------------------------------------
+            //-------------------------------------------------------------------------------------------------------
             //優先度
             //優先度選択のコンボボックス
             rank = new ComboBox();
-
+            //フォント
             rank.Font = new Font("UTF-8", 10);
+            
             //サイズ
             rank.Size = new Size(40, 100);
             //位置(名前の右上座標+10)
@@ -177,12 +183,13 @@ namespace kozintest01
             //int selectedIndex = name.selectedIndex;
 
 
-            //-----------------------------------------------------------------------------
+            //------------------------------------------------------------------------------------------------------
             //期限
             //期限選択
             finish = new DateTimePicker();
 
             finish.Font = new Font("UTF-8", 10);
+            
             //サイズ
             finish.Size = new Size(120,100);
             //位置(優先度の右上座標+10)
@@ -203,7 +210,7 @@ namespace kozintest01
             private Button DeltimeButton;
              */
 
-            //------------------------------------------------------------------------------
+            //-------------------------------------------------------------------------------------------------------
             //時間進めるボタン
             AddtimeButton = new System.Windows.Forms.Button();
             AddtimeButton.FlatStyle = FlatStyle.Flat;
@@ -237,7 +244,7 @@ namespace kozintest01
 
 
 
-            //-------------------------------------------------------------------------------
+            //------------------------------------------------------------------------------------------------------
             //時間戻す
             DeltimeButton = new System.Windows.Forms.Button();
             DeltimeButton.FlatStyle = FlatStyle.Flat;
@@ -266,7 +273,7 @@ namespace kozintest01
 
 
 
-
+            //-----------------------------------------------------------------------------------------------
             //時間表示ラベル
             //作成
             TimeDis = new System.Windows.Forms.Label();
