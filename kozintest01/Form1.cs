@@ -215,10 +215,10 @@ namespace kozintest01
             AddtimeButton = new System.Windows.Forms.Button();
             AddtimeButton.FlatStyle = FlatStyle.Flat;
             AddtimeButton.FlatAppearance.BorderSize= 0;
-            
             AddtimeButton.FlatAppearance.BorderColor = Color.Black;
-            
 
+            //ボタンの色
+            AddtimeButton.BackColor = Color.Silver;
             AddtimeButton.FlatAppearance.MouseOverBackColor = Color.Gray;
             AddtimeButton.FlatAppearance.MouseDownBackColor= Color.WhiteSmoke;
 
@@ -250,6 +250,8 @@ namespace kozintest01
             DeltimeButton.FlatStyle = FlatStyle.Flat;
             DeltimeButton.FlatAppearance.BorderSize = 0;
 
+            //ボタンの色
+            DeltimeButton.BackColor = Color.Silver;
             DeltimeButton.FlatAppearance.MouseOverBackColor = Color.Gray;
             DeltimeButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
 
@@ -284,9 +286,11 @@ namespace kozintest01
             TimeDis.Font = new Font("UTF-8", 10);
 
             //枠に色をつける
-            TimeDis.BorderStyle = BorderStyle.FixedSingle;
+            TimeDis.BackColor = Color.SeaGreen;
             //色
             TimeDis.ForeColor = Color.Black;
+            //文字の位置
+            TimeDis.TextAlign = ContentAlignment.MiddleCenter;
 
             //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
             TimeDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + AddtimeButton.Width),60);
