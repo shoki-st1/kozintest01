@@ -34,10 +34,10 @@ namespace kozintest01
         //現在時間表示ラベル
         private Label TimeDis;
 
-        //時間ボタン
-        //日付進める
-        private Button AddtimeButton;
-        //日付戻る
+        //リンク集に飛ぶための宣言
+        private Button LinkButton;
+
+        //???
         private Button DeltimeButton;
 
 
@@ -210,37 +210,37 @@ namespace kozintest01
             private Button DeltimeButton;
              */
 
-            //-------------------------------------------------------------------------------------------------------
-            //時間進めるボタン
-            AddtimeButton = new System.Windows.Forms.Button();
-            AddtimeButton.FlatStyle = FlatStyle.Flat;
-            AddtimeButton.FlatAppearance.BorderSize= 0;
-            AddtimeButton.FlatAppearance.BorderColor = Color.Black;
+
+            //リンクボタン
+            LinkButton = new System.Windows.Forms.Button();
+            LinkButton.FlatStyle = FlatStyle.Flat;
+            LinkButton.FlatAppearance.BorderSize= 0;
+            LinkButton.FlatAppearance.BorderColor = Color.Black;
 
             //ボタンの色
-            AddtimeButton.BackColor = Color.Silver;
-            AddtimeButton.FlatAppearance.MouseOverBackColor = Color.Gray;
-            AddtimeButton.FlatAppearance.MouseDownBackColor= Color.WhiteSmoke;
+            LinkButton.BackColor = Color.Silver;
+            LinkButton.FlatAppearance.MouseOverBackColor = Color.Gray;
+            LinkButton.FlatAppearance.MouseDownBackColor= Color.WhiteSmoke;
 
-            this.AddtimeButton.Name = "Addtime";
+            this.LinkButton.Name = "Link";
 
-            this.AddtimeButton.Text = "＞";
-            this.AddtimeButton.Font = new Font("UTF-8", 10);
-            this.AddtimeButton.TextAlign = ContentAlignment.MiddleCenter;
+            this.LinkButton.Text = "L";
+            this.LinkButton.Font = new Font("UTF-8", 10);
+            this.LinkButton.TextAlign = ContentAlignment.MiddleCenter;
 
 
             //ボタン大きさ
-            this.AddtimeButton.Size = new System.Drawing.Size(70, 60);
+            this.LinkButton.Size = new System.Drawing.Size(70, 60);
             //位置(formサイズからボタンの分を引いた値)
-            this.AddtimeButton.Location = new Point(this.ClientSize.Width - AddtimeButton.Width, 0);
+            this.LinkButton.Location = new Point(this.ClientSize.Width - LinkButton.Width, 0);
             
 
             //イベント
-            this.AddtimeButton.Click += new EventHandler(this.AddtimeButton_Click);
-            this.AddtimeButton.Parent = this;
-            this.AddtimeButton.BringToFront();
+            this.LinkButton.Click += new EventHandler(this.LinkButton_Click);
+            this.LinkButton.Parent = this;
+            this.LinkButton.BringToFront();
             this.ResumeLayout(false);
-            this.Controls.Add(this.AddtimeButton);
+            this.Controls.Add(this.LinkButton);
 
 
 
@@ -293,14 +293,12 @@ namespace kozintest01
             TimeDis.TextAlign = ContentAlignment.MiddleCenter;
 
             //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
-            TimeDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + AddtimeButton.Width),60);
+            TimeDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width),60);
             //位置(DeltimeButtonの横幅を足した位置)
             TimeDis.Location = new Point(0 + DeltimeButton.Width,0);
 
             //formに追加
             this.Controls.Add(TimeDis);
-
-
 
 
         }
@@ -317,10 +315,14 @@ namespace kozintest01
 
         }
 
-        //時間進める
-        public void AddtimeButton_Click(object sender, EventArgs e)
-        {
 
+        //リンク集に飛ばす
+        public void LinkButton_Click(object sender, EventArgs e)
+        {
+            //urlの指定
+            string url = "file:///C:/first/%E3%81%9D%E3%81%AE%E4%BB%96/master.html";
+            //urlを開く
+            System.Diagnostics.Process.Start(url);
         }
 
 
