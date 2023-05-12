@@ -321,8 +321,12 @@ namespace kozintest01
 
             //表の表示
             DataGridView ScheduleDis = new DataGridView();
-            //パネルに大きさを合わせる
+            //パネルに表の大きさを合わせる
             ScheduleDis.Dock = DockStyle.Fill;
+
+            //高さと幅のパネルの大きさにする
+            ScheduleDis.Width = DataPanel.Width;
+            ScheduleDis.Height = DataPanel.Height;
             //パネル（formの上にある）に乗っける
             DataPanel.Controls.Add(ScheduleDis);
 
@@ -335,7 +339,7 @@ namespace kozintest01
             //ここでファイルcsvから読み込めばいい
             DataTable.Columns.Add("Name", typeof(string));
             DataTable.Columns.Add("Age", typeof(int));
-
+            //データの入力
             DataTable.Rows.Add("test", 25);
             DataTable.Rows.Add("test1", 30);
 
