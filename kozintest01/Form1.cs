@@ -313,7 +313,7 @@ namespace kozintest01
             Panel DataPanel = new Panel();
             //位置とサイズ
             DataPanel.Location = new Point(30,150);
-            DataPanel.Size = new Size(300,500);
+            DataPanel.Size = new Size(300,300);
             //formに追加
             this.Controls.Add(DataPanel);
 
@@ -321,6 +321,8 @@ namespace kozintest01
 
             //表の表示
             DataGridView ScheduleDis = new DataGridView();
+            //パネルに大きさを合わせる
+            ScheduleDis.Dock = DockStyle.Fill;
             //パネル（formの上にある）に乗っける
             DataPanel.Controls.Add(ScheduleDis);
 
@@ -330,19 +332,17 @@ namespace kozintest01
             DataTable DataTable = new DataTable();
 
             //テーブルの用意//テスト用
+            //ここでファイルcsvから読み込めばいい
             DataTable.Columns.Add("Name", typeof(string));
             DataTable.Columns.Add("Age", typeof(int));
+
             DataTable.Rows.Add("test", 25);
             DataTable.Rows.Add("test1", 30);
 
             //表に反映
             ScheduleDis.DataSource = DataTable;
             //カラムの自動生成設定trueで自動
-            ScheduleDis.AutoGenerateColumns = true;
-
-            ScheduleDis.Columns.Add("Name", "Name");
-            ScheduleDis.Columns.Add("Age", "Age");
-
+            //ScheduleDis.AutoGenerateColumns = true;
 
 
         }
