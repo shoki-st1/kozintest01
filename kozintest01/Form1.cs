@@ -22,6 +22,7 @@ namespace kozintest01
         private Button AddButton,DeleteButton;
 
 
+
         /*テキストボックス名前、期限
             コンボボックス優先度
             期限選択
@@ -31,8 +32,14 @@ namespace kozintest01
         ComboBox rank ;
         DateTimePicker finish;
 
+
+
+        //現在時刻関数
+        static DateTime date = DateTime.Now;
+
         //現在時間表示ラベル
         private Label TimeDis;
+
 
         //リンク集に飛ぶための宣言
         private Button LinkButton;
@@ -48,8 +55,6 @@ namespace kozintest01
         //表(一覧表示)
         private DataGridView ScheduleDis;
 
-        //現在時刻関数
-        static DateTime date = DateTime.Now;
 
 
         public Form1()
@@ -301,6 +306,45 @@ namespace kozintest01
             this.Controls.Add(TimeDis);
 
 
+            //-------------------------------------------------------------------------------------------------------
+
+
+            //表を表示させて乗せるためのパネル、表のみでは位置を決めれないため
+            Panel DataPanel = new Panel();
+            //位置とサイズ
+            DataPanel.Location = new Point(30,150);
+            DataPanel.Size = new Size(300,500);
+            //formに追加
+            this.Controls.Add(DataPanel);
+
+
+
+            //表の表示
+            DataGridView ScheduleDis = new DataGridView();
+            //パネル（formの上にある）に乗っける
+            DataPanel.Controls.Add(ScheduleDis);
+
+
+
+            //データテーブルの定義
+            DataTable DataTable = new DataTable();
+
+            //テーブルの用意//テスト用
+            DataTable.Columns.Add("Name", typeof(string));
+            DataTable.Columns.Add("Age", typeof(int));
+            DataTable.Rows.Add("test", 25);
+            DataTable.Rows.Add("test1", 30);
+
+            //表に反映
+            ScheduleDis.DataSource = DataTable;
+            //カラムの自動生成設定trueで自動
+            ScheduleDis.AutoGenerateColumns = true;
+
+            ScheduleDis.Columns.Add("Name", "Name");
+            ScheduleDis.Columns.Add("Age", "Age");
+
+
+
         }
 
         //予定追加ボタン
@@ -320,9 +364,9 @@ namespace kozintest01
         public void LinkButton_Click(object sender, EventArgs e)
         {
             //urlの指定
-            string url = "file:///C:/first/%E3%81%9D%E3%81%AE%E4%BB%96/master.html";
+            //string url = "file:///C:/first/%E3%81%9D%E3%81%AE%E4%BB%96/master.html";
             //urlを開く
-            System.Diagnostics.Process.Start(url);
+            //System.Diagnostics.Process.Start(url);
         }
 
 
