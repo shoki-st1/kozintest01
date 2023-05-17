@@ -50,12 +50,11 @@ namespace kozintest01
 
         //タイマー宣言
         Timer DateTimer;
-        
-
+        //定義
+        private Panel DataPanel;
         //表(一覧表示)
         private DataGridView ScheduleDis;
-
-
+       
 
         public Form1()
         {
@@ -98,7 +97,7 @@ namespace kozintest01
             this.AddButton.TextAlign = ContentAlignment.TopCenter;
 
             //位置(formからボタン分と少し引く)
-            this.AddButton.Location = new Point(this.ClientSize.Width - AddButton.Width -20,150);
+            this.AddButton.Location = new Point(this.ClientSize.Width - AddButton.Width -10,150);
             //ボタン大きさ
             this.AddButton.Size = new System.Drawing.Size(50,30);
 
@@ -130,7 +129,7 @@ namespace kozintest01
             this.DeleteButton.TextAlign = ContentAlignment.TopCenter;
 
             //位置
-            this.DeleteButton.Location = new Point(this.ClientSize.Width - DeleteButton.Width -20,400);
+            this.DeleteButton.Location = new Point(this.ClientSize.Width - DeleteButton.Width -10,400);
             //ボタン大きさ
             this.DeleteButton.Size = new System.Drawing.Size(50,30);
 
@@ -229,7 +228,7 @@ namespace kozintest01
 
             this.LinkButton.Name = "Link";
 
-            this.LinkButton.Text = "L";
+            this.LinkButton.Text = "🔎";
             this.LinkButton.Font = new Font("UTF-8", 10);
             this.LinkButton.TextAlign = ContentAlignment.MiddleCenter;
 
@@ -308,45 +307,60 @@ namespace kozintest01
 
             //-------------------------------------------------------------------------------------------------------
 
-
+            //パネル
             //表を表示させて乗せるためのパネル、表のみでは位置を決めれないため
             Panel DataPanel = new Panel();
             //位置とサイズ
-            DataPanel.Location = new Point(30,150);
-            DataPanel.Size = new Size(300,300);
+            DataPanel.Location = new Point(20,150);
+            DataPanel.Size = new Size(310,300);
             //formに追加
             this.Controls.Add(DataPanel);
 
 
 
-            //表の表示
+            //表の表示のみ
             DataGridView ScheduleDis = new DataGridView();
             //パネルに表の大きさを合わせる
             ScheduleDis.Dock = DockStyle.Fill;
 
+            //なんかサイズおかしいけど保留で
             //高さと幅のパネルの大きさにする
-            ScheduleDis.Width = DataPanel.Width;
-            ScheduleDis.Height = DataPanel.Height;
+            ScheduleDis.Size = DataPanel.Size;
+            //ScheduleDis.Width = DataPanel.Width;
+            //ScheduleDis.Height = DataPanel.Height;
             //パネル（formの上にある）に乗っける
             DataPanel.Controls.Add(ScheduleDis);
 
 
-
             //データテーブルの定義
-            DataTable DataTable = new DataTable();
+            DataTable dataTable = new DataTable();
 
             //テーブルの用意//テスト用
             //ここでファイルcsvから読み込めばいい
-            DataTable.Columns.Add("Name", typeof(string));
-            DataTable.Columns.Add("Age", typeof(int));
+            dataTable.Columns.Add("やること", typeof(string));
+            dataTable.Columns.Add("優先度", typeof(int));
+            dataTable.Columns.Add("期限", typeof(DateTime));
             //データの入力
-            DataTable.Rows.Add("test", 25);
-            DataTable.Rows.Add("test1", 30);
-
+            dataTable.Rows.Add("test", 25);
+            
             //表に反映
-            ScheduleDis.DataSource = DataTable;
+            ScheduleDis.DataSource = dataTable;
             //カラムの自動生成設定trueで自動
             //ScheduleDis.AutoGenerateColumns = true;
+
+            //優先度のみ右寄せ
+            ScheduleDis.Rows[0].Cells[1].Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            //反映後じゃないとデータがない
+            //列の大きさ変更カラムの要素を代入
+            DataGridViewColumn namecolumn = ScheduleDis.Columns[0];
+            DataGridViewColumn ranckcolumn = ScheduleDis.Columns[1];
+            DataGridViewColumn finishcolumn = ScheduleDis.Columns[2];
+
+            //列の幅指定
+            namecolumn.Width = 130;
+            ranckcolumn.Width = 50;
+            finishcolumn.Width = 110;
 
 
         }
@@ -354,6 +368,25 @@ namespace kozintest01
         //予定追加ボタン
         private void AddButton_Click(object sender,EventArgs e)
         {
+            Control.ControlCollection controls = DataPanel.Controls;
+
+            DataGridView ScheduleDis = null;
+
+            foreach (Control control in controls)
+            {
+                if (control is DataGridView)
+                {
+                    ScheduleDis = (DataGridView)control;
+                    break;
+                }
+            }
+
+
+            if (ScheduleDis != null)
+            {
+                // DataGridViewが見つかった場合の処理
+                // ここでDataGridViewのプロパティやデータを操作できます
+            }
 
         }
 
@@ -368,12 +401,13 @@ namespace kozintest01
         public void LinkButton_Click(object sender, EventArgs e)
         {
             //urlの指定
-            //string url = "file:///C:/first/%E3%81%9D%E3%81%AE%E4%BB%96/master.html";
+            string url = "https://www.google.com/?hl=ja";
             //urlを開く
-            //System.Diagnostics.Process.Start(url);
+            System.Diagnostics.Process.Start(url);
         }
 
 
+        //???
         //時間戻す
         public void DeltimeButton_Click(object sender, EventArgs e)
         {
