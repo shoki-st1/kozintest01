@@ -50,11 +50,18 @@ namespace kozintest01
 
         //タイマー宣言
         Timer DateTimer;
+
+
         //定義
         private Panel DataPanel;
         //表(一覧表示)
         private DataGridView ScheduleDis;
-       
+        //データベース
+        private DataTable dataTable;
+        //追加
+        DataTable adddataTable = new DataTable();
+
+        //---------------------------------------------------------------------------------------
 
         public Form1()
         {
@@ -313,46 +320,37 @@ namespace kozintest01
             //位置とサイズ
             DataPanel.Location = new Point(20,150);
             DataPanel.Size = new Size(310,300);
+            //デバック用
+            DataPanel.BackColor = Color.Red;
             //formに追加
             this.Controls.Add(DataPanel);
 
-
-
-            //表の表示のみ
             DataGridView ScheduleDis = new DataGridView();
-            //パネルに表の大きさを合わせる
             ScheduleDis.Dock = DockStyle.Fill;
-
-            //なんかサイズおかしいけど保留で
-            //高さと幅のパネルの大きさにする
-            ScheduleDis.Size = DataPanel.Size;
-            //ScheduleDis.Width = DataPanel.Width;
-            //ScheduleDis.Height = DataPanel.Height;
-            //パネル（formの上にある）に乗っける
             DataPanel.Controls.Add(ScheduleDis);
 
-
-            //データテーブルの定義
+            // データテーブルの定義
             DataTable dataTable = new DataTable();
-
-            //テーブルの用意//テスト用
-            //ここでファイルcsvから読み込めばいい
+            // テーブルの列を定義
             dataTable.Columns.Add("やること", typeof(string));
             dataTable.Columns.Add("優先度", typeof(int));
             dataTable.Columns.Add("期限", typeof(DateTime));
-            //データの入力
-            dataTable.Rows.Add("test", 25);
-            
-            //表に反映
+
+            // 初期データを追加
+            dataTable.Rows.Add("test", 25, DateTime.Now);
+
             ScheduleDis.DataSource = dataTable;
+
+
             //カラムの自動生成設定trueで自動
             //ScheduleDis.AutoGenerateColumns = true;
 
+            /*
             //優先度のみ右寄せ
             ScheduleDis.Rows[0].Cells[1].Style.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             //反映後じゃないとデータがない
-            //列の大きさ変更カラムの要素を代入
+            //列の大きさ変更、カラムの要素を代入
             DataGridViewColumn namecolumn = ScheduleDis.Columns[0];
             DataGridViewColumn ranckcolumn = ScheduleDis.Columns[1];
             DataGridViewColumn finishcolumn = ScheduleDis.Columns[2];
@@ -361,6 +359,10 @@ namespace kozintest01
             namecolumn.Width = 130;
             ranckcolumn.Width = 50;
             finishcolumn.Width = 110;
+            */
+
+
+
 
 
         }
@@ -368,25 +370,44 @@ namespace kozintest01
         //予定追加ボタン
         private void AddButton_Click(object sender,EventArgs e)
         {
-            Control.ControlCollection controls = DataPanel.Controls;
+            // パネルからデータグリッドビューを取得
+            DataGridView ScheduleDis = DataPanel.Controls.OfType<DataGridView>().FirstOrDefault();
 
-            DataGridView ScheduleDis = null;
+            // データテーブルを取得
+            DataTable dataTable = (DataTable)ScheduleDis.DataSource;
 
-            foreach (Control control in controls)
+            // 新しいデータを追加
+            dataTable.Rows.Add("new task", 10, DateTime.Now.AddDays(1));
+
+            // データグリッドビューを更新
+            ScheduleDis.Refresh();
+
+
+            //パネルのコントロールを取得
+            //Control.ControlCollection controls = DataPanel.Controls;
+
+            //DataGridView ScheduleDis = null;
+            /*
+            DataTable adddataTable = GetDataTable(dataTable); // データテーブルを取得する例
+            //ScheduleDis.DataSource = dataTable; // データテーブルをDataGridViewにバインドする
+    
+            // テキストあれば処理
+            if (string.IsNullOrEmpty(name.Text))
             {
-                if (control is DataGridView)
-                {
-                    ScheduleDis = (DataGridView)control;
-                    break;
-                }
+                // 入力内容が空でない場合の処理
+                //データの入力
+                adddataTable.Rows.Add(name.Text, 0);
+
+                //表に反映
+                ScheduleDis.DataSource = adddataTable;
+            }
+            else
+            {
+                // 入力内容が空の場合の処理
+                MessageBox.Show("やることを入力してください");
             }
 
-
-            if (ScheduleDis != null)
-            {
-                // DataGridViewが見つかった場合の処理
-                // ここでDataGridViewのプロパティやデータを操作できます
-            }
+            */
 
         }
 
