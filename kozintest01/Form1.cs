@@ -57,9 +57,9 @@ namespace kozintest01
         //表(一覧表示)
         private DataGridView ScheduleDis;
         //データベース
-        private DataTable dataTable;
+        //private DataTable dataTable;
         //追加
-        DataTable adddataTable = new DataTable();
+        //DataTable adddataTable = new DataTable();
 
         //---------------------------------------------------------------------------------------
 
@@ -292,7 +292,7 @@ namespace kozintest01
             TimeDis = new System.Windows.Forms.Label();
 
             //現在の時間を表示させる
-            TimeDis.Text = "時間";
+            TimeDis.Text = DateTime.Now.ToString("yyyy/MM/dd");
             //フォント
             TimeDis.Font = new Font("UTF-8", 10);
 
@@ -336,11 +336,12 @@ namespace kozintest01
             dataTable.Columns.Add("優先度", typeof(int));
             dataTable.Columns.Add("期限", typeof(DateTime));
 
-            // 初期データを追加
-            dataTable.Rows.Add("test", 25, DateTime.Now);
-
             ScheduleDis.DataSource = dataTable;
 
+            // 初期データを追加
+            //dataTable.Rows.Add("test", 25, DateTime.Now);
+
+            
 
             //カラムの自動生成設定trueで自動
             //ScheduleDis.AutoGenerateColumns = true;
@@ -371,7 +372,8 @@ namespace kozintest01
         private void AddButton_Click(object sender,EventArgs e)
         {
             // パネルからデータグリッドビューを取得
-            DataGridView ScheduleDis = DataPanel.Controls.OfType<DataGridView>().FirstOrDefault();
+            //DataGridView ScheduleDis = DataPanel.Controls.OfType<DataGridView>().FirstOrDefault();
+            
 
             // データテーブルを取得
             DataTable dataTable = (DataTable)ScheduleDis.DataSource;
@@ -380,7 +382,7 @@ namespace kozintest01
             dataTable.Rows.Add("new task", 10, DateTime.Now.AddDays(1));
 
             // データグリッドビューを更新
-            ScheduleDis.Refresh();
+            //ScheduleDis.Refresh();
 
 
             //パネルのコントロールを取得
