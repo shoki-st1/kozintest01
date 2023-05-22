@@ -32,6 +32,10 @@ namespace kozintest01
         ComboBox rank ;
         DateTimePicker finish;
 
+        //入力名ラベル
+        private Label nameDis,rankDis,finiDis;
+
+
 
 
         //現在時刻関数
@@ -168,6 +172,29 @@ namespace kozintest01
             this.Controls.Add(name);
 
 
+            //表示ラベル
+            //作成
+            nameDis = new System.Windows.Forms.Label();
+
+            //表示
+            nameDis.Text = "やること";
+            //フォント
+            nameDis.Font = new Font("UTF-8", 10);
+
+            
+            //色
+            nameDis.ForeColor = Color.Black;
+            //文字の位置
+            nameDis.TextAlign = ContentAlignment.MiddleCenter;
+
+            //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
+            //nameDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
+            //位置(やること表示位置)
+            nameDis.Location = new Point(name.Location.X -10, 80);
+
+            //formに追加
+            this.Controls.Add(nameDis);
+
             //-------------------------------------------------------------------------------------------------------
             //優先度
             //優先度選択のコンボボックス
@@ -194,6 +221,30 @@ namespace kozintest01
             //int selectedIndex = name.selectedIndex;
 
 
+
+            //表示ラベル
+            //作成
+            rankDis = new System.Windows.Forms.Label();
+
+            //表示
+            rankDis.Text = "優先度";
+            //フォント
+            rankDis.Font = new Font("UTF-8", 10);
+
+
+            //色
+            rankDis.ForeColor = Color.Black;
+            //文字の位置
+            rankDis.TextAlign = ContentAlignment.MiddleCenter;
+
+            //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
+            //nameDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
+            //位置(やること表示位置)
+            rankDis.Location = new Point(rank.Location.X, 90);
+
+            //formに追加
+            this.Controls.Add(rankDis);
+
             //------------------------------------------------------------------------------------------------------
             //期限
             //期限選択
@@ -210,16 +261,31 @@ namespace kozintest01
             this.Controls.Add(finish);
 
 
+            //表示ラベル
+            //作成
+            finiDis = new System.Windows.Forms.Label();
 
-            //時間ラベル
-            /*
-           //時間表示ラベル
-            private Label TimeDis;
-            //日付進める
-            private Button AddtimeButton;
-            //日付戻る
-            private Button DeltimeButton;
-             */
+            //表示
+            finiDis.Text = "期限日";
+            //フォント
+            finiDis.Font = new Font("UTF-8", 10);
+
+
+            //色
+            finiDis.ForeColor = Color.Black;
+            //文字の位置
+            finiDis.TextAlign = ContentAlignment.MiddleCenter;
+
+            //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
+            //nameDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
+            //位置(やること表示位置)
+            finiDis.Location = new Point(finish.Location.X, 90);
+
+            //formに追加
+            this.Controls.Add(finiDis);
+
+
+            //----------------------------------------------------------------------------------------------------------
 
 
             //リンクボタン
@@ -376,10 +442,10 @@ namespace kozintest01
             
 
             // データテーブルを取得
-            DataTable dataTable = (DataTable)ScheduleDis.DataSource;
+            DataTable adddataTable = (DataTable)ScheduleDis.DataSource;
 
             // 新しいデータを追加
-            dataTable.Rows.Add("new task", 10, DateTime.Now.AddDays(1));
+            adddataTable.Rows.Add("new task", 10, DateTime.Now.AddDays(1));
 
             // データグリッドビューを更新
             //ScheduleDis.Refresh();
