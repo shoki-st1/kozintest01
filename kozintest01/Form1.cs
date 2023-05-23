@@ -190,7 +190,7 @@ namespace kozintest01
             //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
             //nameDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
             //位置(やること表示位置)
-            nameDis.Location = new Point(name.Location.X -10, 80);
+            nameDis.Location = new Point(name.Location.X -10, 75);
 
             //formに追加
             this.Controls.Add(nameDis);
@@ -240,7 +240,7 @@ namespace kozintest01
             //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
             //nameDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
             //位置(やること表示位置)
-            rankDis.Location = new Point(rank.Location.X, 90);
+            rankDis.Location = new Point(rank.Location.X -30, 75);
 
             //formに追加
             this.Controls.Add(rankDis);
@@ -279,7 +279,7 @@ namespace kozintest01
             //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
             //nameDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
             //位置(やること表示位置)
-            finiDis.Location = new Point(finish.Location.X, 90);
+            finiDis.Location = new Point(finish.Location.X - 5, 75);
 
             //formに追加
             this.Controls.Add(finiDis);
