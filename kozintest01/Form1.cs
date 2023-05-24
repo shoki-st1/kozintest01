@@ -290,8 +290,11 @@ namespace kozintest01
             //formに追加
             this.Controls.Add(finish);
 
+        }
 
-
+        //"期限日"表示
+        public void SetFinishLabel()
+        {
             //表示ラベル
             //作成
             finiDis = new System.Windows.Forms.Label();
@@ -327,24 +330,22 @@ namespace kozintest01
             LinkButton.FlatAppearance.MouseOverBackColor = Color.Gray;
             LinkButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
 
-            this.LinkButton.Name = "Link";
-
+            //テキスト設定
             this.LinkButton.Text = "🔎";
             this.LinkButton.Font = new Font("UTF-8", 10);
             this.LinkButton.TextAlign = ContentAlignment.MiddleCenter;
-
 
             //ボタン大きさ
             this.LinkButton.Size = new System.Drawing.Size(70, 60);
             //位置(formサイズからボタンの分を引いた値)
             this.LinkButton.Location = new Point(this.ClientSize.Width - LinkButton.Width, 0);
 
-
             //イベント
             this.LinkButton.Click += new EventHandler(this.LinkButton_Click);
             this.LinkButton.Parent = this;
             this.LinkButton.BringToFront();
             this.ResumeLayout(false);
+            //formに乗せる
             this.Controls.Add(this.LinkButton);
         }
 
@@ -391,12 +392,11 @@ namespace kozintest01
             //追加ボタン
             Addbottun();
 
-            //---------------------------------------------------------------------------------------------
             //削除ボタン
             Deletebutton();
 
             //---------------------------------------------------------------------------------------------
-            //名前
+            //やること名前
             SetNametext();
             SetNameLabel();
             //---------------------------------------------------------------------------------------------
@@ -406,7 +406,7 @@ namespace kozintest01
             //---------------------------------------------------------------------------------------------
             //期限
             SetFinish();
-
+            SetFinishLabel();
             //---------------------------------------------------------------------------------------------
             //リンクボタン
             SetLinkButton();
@@ -461,8 +461,6 @@ namespace kozintest01
         }
 
         
-
-
         //予定追加ボタン動作関数
         private void AddButton_Click(object sender,EventArgs e)
         {
