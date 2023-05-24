@@ -19,7 +19,7 @@ namespace kozintest01
 
         //定義の宣言
         //予定、追加ボタン,削除
-        private Button AddButton,DeleteButton;
+        private Button AddButton, DeleteButton;
 
 
 
@@ -29,11 +29,11 @@ namespace kozintest01
         一列で表示
         */
         TextBox name;
-        ComboBox rank ;
+        ComboBox rank;
         DateTimePicker finish;
 
         //入力名ラベル
-        private Label nameDis,rankDis,finiDis;
+        private Label nameDis, rankDis, finiDis;
 
 
 
@@ -61,17 +61,55 @@ namespace kozintest01
         //表(一覧表示)
         private DataGridView ScheduleDis;
         //データベース
-        //private DataTable dataTable;
+        private DataTable dataTable;
         //追加
-        //DataTable adddataTable = new DataTable();
+        private DataTable adddataTable;
 
         //---------------------------------------------------------------------------------------
 
         public Form1()
         {
             InitializeComponent();
+            //追加
+            //パネル
+            InitializeDataPanel();
+            //テーブル
+            InitializeDataTable();
+            //表
+            InitializeDataGridView();
+
 
             this.Load += Form1_Load;
+        }
+
+
+        //DataPanelの設定関数
+        private void InitializeDataPanel()
+        {
+            DataPanel = new Panel();
+            DataPanel.Location = new Point(20, 150);
+            DataPanel.Size = new Size(310, 300);
+            DataPanel.BackColor = Color.Red;
+            this.Controls.Add(DataPanel);
+        }
+
+        //Tableの設定関数
+        private void InitializeDataTable()
+        {
+            dataTable = new DataTable();
+            dataTable.Columns.Add("やること", typeof(string));
+            dataTable.Columns.Add("優先度", typeof(int));
+            dataTable.Columns.Add("期限", typeof(DateTime));
+            dataTable.Rows.Add("test", 25, DateTime.Now);
+        }
+
+        //表の設定関数
+        private void InitializeDataGridView()
+        {
+            ScheduleDis = new DataGridView();
+            ScheduleDis.Dock = DockStyle.Fill;
+            ScheduleDis.DataSource = dataTable;
+            DataPanel.Controls.Add(ScheduleDis);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -82,75 +120,18 @@ namespace kozintest01
             this.Height = 500;
 
             //form拡大縮小の指定
-            this.MaximumSize = new Size(450,500);
-            this.MinimumSize = new Size(450,500);
+            this.MaximumSize = new Size(450, 500);
+            this.MinimumSize = new Size(450, 500);
 
 
             //---------------------------------------------------------------------------------------------
             //ボタン
             //追加ボタン
-            AddButton = new System.Windows.Forms.Button();
-            AddButton.FlatStyle = FlatStyle.Flat;
-            AddButton.FlatAppearance.BorderSize = 0;
-
-
-            //バックカラー
-            AddButton.BackColor = Color.OrangeRed;
-            //マウスが通る、押す色
-            AddButton.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
-            AddButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
-
-            //ボタン名前
-            this.AddButton.Name = "Add";
-            //表示テキスト設定
-            this.AddButton.Text = "追加";
-            this.AddButton.Font = new Font("UTF-8",10);
-            this.AddButton.TextAlign = ContentAlignment.TopCenter;
-
-            //位置(formからボタン分と少し引く)
-            this.AddButton.Location = new Point(this.ClientSize.Width - AddButton.Width -10,150);
-            //ボタン大きさ
-            this.AddButton.Size = new System.Drawing.Size(50,30);
-
-            //イベント
-            this.AddButton.Click += new EventHandler(this.AddButton_Click);
-            this.AddButton.Parent = this;
-            this.AddButton.BringToFront();
-            this.ResumeLayout(false);
-
-
+            Addbottun();
 
             //-------------------------------------------------------------------------------------------------------
             //削除ボタン
-            DeleteButton = new System.Windows.Forms.Button();
-            DeleteButton.FlatStyle = FlatStyle.Flat;
-            DeleteButton.FlatAppearance.BorderSize = 0;
-
-            //バックカラー
-            DeleteButton.BackColor = Color.LightBlue;
-            //マウス押す、通る色
-            DeleteButton.FlatAppearance.MouseOverBackColor= Color.Gray;
-            DeleteButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
-
-            //ボタン名前
-            this.DeleteButton.Name = "Delete";
-            //表示テキスト設定
-            this.DeleteButton.Text = "削除";
-            this.DeleteButton.Font = new Font("UTF-8", 10);
-            this.DeleteButton.TextAlign = ContentAlignment.TopCenter;
-
-            //位置
-            this.DeleteButton.Location = new Point(this.ClientSize.Width - DeleteButton.Width -10,400);
-            //ボタン大きさ
-            this.DeleteButton.Size = new System.Drawing.Size(50,30);
-
-            //イベント
-            this.DeleteButton.Click += new EventHandler(this.DeleteButton_Click);
-            this.DeleteButton.Parent = this;
-            this.DeleteButton.BringToFront();
-            this.ResumeLayout(false);
-
-
+            Deletebutton();
 
             //入力するものの定義
             /*private TextBox name;
@@ -162,11 +143,11 @@ namespace kozintest01
             //名前入力テキストボックス
             name = new TextBox();
             //フォント
-            name.Font = new Font("UTF-8", 10); 
+            name.Font = new Font("UTF-8", 10);
             //サイズ
             name.Size = new Size(170, 100);
             //位置
-            name.Location = new Point(30,100);
+            name.Location = new Point(30, 100);
 
             //form追加
             this.Controls.Add(name);
@@ -181,16 +162,14 @@ namespace kozintest01
             //フォント
             nameDis.Font = new Font("UTF-8", 10);
 
-            
+
             //色
             nameDis.ForeColor = Color.Black;
             //文字の位置
             nameDis.TextAlign = ContentAlignment.MiddleCenter;
 
-            //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
-            //nameDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
-            //位置(やること表示位置)
-            nameDis.Location = new Point(name.Location.X -10, 75);
+            //位置("やること"表示位置)
+            nameDis.Location = new Point(name.Location.X - 10, 75);
 
             //formに追加
             this.Controls.Add(nameDis);
@@ -201,14 +180,14 @@ namespace kozintest01
             rank = new ComboBox();
             //フォント
             rank.Font = new Font("UTF-8", 10);
-            
+
             //サイズ
             rank.Size = new Size(40, 100);
             //位置(名前の右上座標+10)
-            rank.Location = new Point(name.Location.X + name.Width + 10,100);
-            
+            rank.Location = new Point(name.Location.X + name.Width + 10, 100);
 
-            //選択
+
+            //優先度選択
             rank.Items.Add("1");
             rank.Items.Add("2");
             rank.Items.Add("3");
@@ -220,8 +199,6 @@ namespace kozintest01
             //選択されたアイテムの要素数
             //int selectedIndex = name.selectedIndex;
 
-
-
             //表示ラベル
             //作成
             rankDis = new System.Windows.Forms.Label();
@@ -231,16 +208,13 @@ namespace kozintest01
             //フォント
             rankDis.Font = new Font("UTF-8", 10);
 
-
             //色
             rankDis.ForeColor = Color.Black;
             //文字の位置
             rankDis.TextAlign = ContentAlignment.MiddleCenter;
 
-            //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
-            //nameDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
-            //位置(やること表示位置)
-            rankDis.Location = new Point(rank.Location.X -30, 75);
+            //位置("優先度"表示位置)
+            rankDis.Location = new Point(rank.Location.X - 30, 75);
 
             //formに追加
             this.Controls.Add(rankDis);
@@ -251,14 +225,15 @@ namespace kozintest01
             finish = new DateTimePicker();
 
             finish.Font = new Font("UTF-8", 10);
-            
+
             //サイズ
-            finish.Size = new Size(120,100);
+            finish.Size = new Size(120, 100);
             //位置(優先度の右上座標+10)
-            finish.Location = new Point(rank.Location.X + rank.Width + 10,100);
+            finish.Location = new Point(rank.Location.X + rank.Width + 10, 100);
 
             //formに追加
             this.Controls.Add(finish);
+
 
 
             //表示ラベル
@@ -270,20 +245,16 @@ namespace kozintest01
             //フォント
             finiDis.Font = new Font("UTF-8", 10);
 
-
             //色
             finiDis.ForeColor = Color.Black;
             //文字の位置
             finiDis.TextAlign = ContentAlignment.MiddleCenter;
 
-            //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
-            //nameDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
             //位置(やること表示位置)
             finiDis.Location = new Point(finish.Location.X - 5, 75);
 
             //formに追加
             this.Controls.Add(finiDis);
-
 
             //----------------------------------------------------------------------------------------------------------
 
@@ -291,13 +262,13 @@ namespace kozintest01
             //リンクボタン
             LinkButton = new System.Windows.Forms.Button();
             LinkButton.FlatStyle = FlatStyle.Flat;
-            LinkButton.FlatAppearance.BorderSize= 0;
+            LinkButton.FlatAppearance.BorderSize = 0;
             LinkButton.FlatAppearance.BorderColor = Color.Black;
 
             //ボタンの色
             LinkButton.BackColor = Color.Silver;
             LinkButton.FlatAppearance.MouseOverBackColor = Color.Gray;
-            LinkButton.FlatAppearance.MouseDownBackColor= Color.WhiteSmoke;
+            LinkButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
 
             this.LinkButton.Name = "Link";
 
@@ -310,7 +281,7 @@ namespace kozintest01
             this.LinkButton.Size = new System.Drawing.Size(70, 60);
             //位置(formサイズからボタンの分を引いた値)
             this.LinkButton.Location = new Point(this.ClientSize.Width - LinkButton.Width, 0);
-            
+
 
             //イベント
             this.LinkButton.Click += new EventHandler(this.LinkButton_Click);
@@ -340,7 +311,7 @@ namespace kozintest01
             //ボタン大きさ
             this.DeltimeButton.Size = new System.Drawing.Size(70, 60);
             //位置
-            this.DeltimeButton.Location = new Point(0,0);
+            this.DeltimeButton.Location = new Point(0, 0);
 
 
             //イベント
@@ -370,44 +341,19 @@ namespace kozintest01
             TimeDis.TextAlign = ContentAlignment.MiddleCenter;
 
             //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
-            TimeDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width),60);
+            TimeDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
             //位置(DeltimeButtonの横幅を足した位置)
-            TimeDis.Location = new Point(0 + DeltimeButton.Width,0);
+            TimeDis.Location = new Point(0 + DeltimeButton.Width, 0);
 
             //formに追加
             this.Controls.Add(TimeDis);
 
 
-            //-------------------------------------------------------------------------------------------------------
-
-            //パネル
-            //表を表示させて乗せるためのパネル、表のみでは位置を決めれないため
-            Panel DataPanel = new Panel();
-            //位置とサイズ
-            DataPanel.Location = new Point(20,150);
-            DataPanel.Size = new Size(310,300);
-            //デバック用
-            DataPanel.BackColor = Color.Red;
-            //formに追加
-            this.Controls.Add(DataPanel);
-
-            DataGridView ScheduleDis = new DataGridView();
-            ScheduleDis.Dock = DockStyle.Fill;
-            DataPanel.Controls.Add(ScheduleDis);
-
-            // データテーブルの定義
-            DataTable dataTable = new DataTable();
-            // テーブルの列を定義
-            dataTable.Columns.Add("やること", typeof(string));
-            dataTable.Columns.Add("優先度", typeof(int));
-            dataTable.Columns.Add("期限", typeof(DateTime));
-
-            ScheduleDis.DataSource = dataTable;
 
             // 初期データを追加
             //dataTable.Rows.Add("test", 25, DateTime.Now);
 
-            
+
 
             //カラムの自動生成設定trueで自動
             //ScheduleDis.AutoGenerateColumns = true;
@@ -429,23 +375,103 @@ namespace kozintest01
             */
 
 
-
-
-
         }
 
-        //予定追加ボタン
+        //追加ボタンの設定
+        public void Addbottun()
+        {
+            AddButton = new System.Windows.Forms.Button();
+            AddButton.FlatStyle = FlatStyle.Flat;
+            AddButton.FlatAppearance.BorderSize = 0;
+
+
+            //バックカラー
+            AddButton.BackColor = Color.OrangeRed;
+            //マウスが通る、押す色
+            AddButton.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
+            AddButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+
+            //ボタン名前
+            this.AddButton.Name = "Add";
+            //表示テキスト設定
+            this.AddButton.Text = "追加";
+            this.AddButton.Font = new Font("UTF-8", 10);
+            this.AddButton.TextAlign = ContentAlignment.TopCenter;
+
+            //位置(formからボタン分と少し引く)
+            this.AddButton.Location = new Point(this.ClientSize.Width - AddButton.Width - 10, 150);
+            //ボタン大きさ
+            this.AddButton.Size = new System.Drawing.Size(50, 30);
+
+            //イベント
+            this.AddButton.Click += new EventHandler(this.AddButton_Click);
+            this.AddButton.Parent = this;
+            this.AddButton.BringToFront();
+            this.ResumeLayout(false);
+        }
+
+        //削除ボタンの設定
+        public void Deletebutton()
+        {
+
+            DeleteButton = new System.Windows.Forms.Button();
+            DeleteButton.FlatStyle = FlatStyle.Flat;
+            DeleteButton.FlatAppearance.BorderSize = 0;
+
+            //バックカラー
+            DeleteButton.BackColor = Color.LightBlue;
+            //マウス押す、通る色
+            DeleteButton.FlatAppearance.MouseOverBackColor = Color.Gray;
+            DeleteButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+
+            //ボタン名前
+            this.DeleteButton.Name = "Delete";
+            //表示テキスト設定
+            this.DeleteButton.Text = "削除";
+            this.DeleteButton.Font = new Font("UTF-8", 10);
+            this.DeleteButton.TextAlign = ContentAlignment.TopCenter;
+
+            //位置
+            this.DeleteButton.Location = new Point(this.ClientSize.Width - DeleteButton.Width - 10, 400);
+            //ボタン大きさ
+            this.DeleteButton.Size = new System.Drawing.Size(50, 30);
+
+            //イベント
+            this.DeleteButton.Click += new EventHandler(this.DeleteButton_Click);
+            this.DeleteButton.Parent = this;
+            this.DeleteButton.BringToFront();
+            this.ResumeLayout(false);
+        }
+
+
+
+        //予定追加ボタン動作関数
         private void AddButton_Click(object sender,EventArgs e)
         {
+            
+            foreach (Control control in DataPanel.Controls)
+            {
+                if (control is DataGridView dataGridView)
+                {
+                    ScheduleDis = dataGridView;
+                    break;
+                }
+            }
+
+            if (ScheduleDis != null && ScheduleDis.DataSource is DataTable dataTable)
+            {
+                // データを追加する
+                dataTable.Rows.Add("追加データ", 50, DateTime.Now);
+            }
             // パネルからデータグリッドビューを取得
             //DataGridView ScheduleDis = DataPanel.Controls.OfType<DataGridView>().FirstOrDefault();
-            
+
 
             // データテーブルを取得
-            DataTable adddataTable = (DataTable)ScheduleDis.DataSource;
+            //DataTable adddataTable = (DataTable)ScheduleDis.DataSource;
 
             // 新しいデータを追加
-            adddataTable.Rows.Add("new task", 10, DateTime.Now.AddDays(1));
+            //adddataTable.Rows.Add("new task", 10, DateTime.Now.AddDays(1));
 
             // データグリッドビューを更新
             //ScheduleDis.Refresh();
