@@ -25,7 +25,7 @@ namespace kozintest01
             期限選択
         一列で表示
         */
-        TextBox name;
+        TextBox nameTextbox;
         ComboBox rank;
         DateTimePicker finish;
 
@@ -182,20 +182,20 @@ namespace kozintest01
             this.ResumeLayout(false);
         }
 
-        //名前テキストの設定
+        //やること名前テキストの設定
         public void SetNametext()
         {
             //名前入力テキストボックス
-            name = new TextBox();
+            nameTextbox = new TextBox();
             //フォント
-            name.Font = new Font("UTF-8", 10);
+            nameTextbox.Font = new Font("UTF-8", 10);
             //サイズ
-            name.Size = new Size(170, 100);
+            nameTextbox.Size = new Size(170, 100);
             //位置
-            name.Location = new Point(30, 100);
+            nameTextbox.Location = new Point(30, 100);
 
             //form追加
-            this.Controls.Add(name);
+            this.Controls.Add(nameTextbox);
 
         }
         //"やること"のラベル
@@ -216,7 +216,7 @@ namespace kozintest01
             nameDis.TextAlign = ContentAlignment.MiddleCenter;
 
             //位置("やること"表示位置)
-            nameDis.Location = new Point(name.Location.X - 10, 75);
+            nameDis.Location = new Point(nameTextbox.Location.X - 10, 75);
 
             //formに追加
             this.Controls.Add(nameDis);
@@ -233,7 +233,7 @@ namespace kozintest01
             //サイズ
             rank.Size = new Size(40, 100);
             //位置(名前の右上座標+10)
-            rank.Location = new Point(name.Location.X + name.Width + 10, 100);
+            rank.Location = new Point(nameTextbox.Location.X + nameTextbox.Width + 10, 100);
 
             //優先度選択
             rank.Items.Add("1");
@@ -292,7 +292,7 @@ namespace kozintest01
 
         }
 
-        //"期限日"表示
+        //"期限日"ラベル
         public void SetFinishLabel()
         {
             //表示ラベル
@@ -445,14 +445,14 @@ namespace kozintest01
             SetTimeDis();
 
 
-            //優先度のみ右寄せ
-            //ScheduleDis.Rows[0].Cells[1].Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-
             //反映後じゃないとデータがない
             //列の大きさ変更、カラムの要素を代入
             DataGridViewColumn namecolumn = ScheduleDis.Columns[0];
             DataGridViewColumn ranckcolumn = ScheduleDis.Columns[1];
             DataGridViewColumn finishcolumn = ScheduleDis.Columns[2];
+
+            //列の右寄せ
+            ranckcolumn.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             //列の幅指定
             namecolumn.Width = 130;
@@ -464,21 +464,18 @@ namespace kozintest01
         //予定追加ボタン動作関数
         private void AddButton_Click(object sender,EventArgs e)
         {
-            
-            foreach (Control control in DataPanel.Controls)
-            {
-                if (control is DataGridView dataGridView)
-                {
-                    ScheduleDis = dataGridView;
-                    break;
-                }
-            }
-
-            if (ScheduleDis != null && ScheduleDis.DataSource is DataTable dataTable)
+            //やることを入力していたなら
+            if (string.IsNullOrEmpty(nameTextbox.Text))
             {
                 // データを追加する
-                dataTable.Rows.Add("追加データ", 50, DateTime.Now);
+                dataTable.Rows.Add(nameTextbox.Text, 1, DateTime.Now);
             }
+            else
+            {
+                MessageBox.Show("やることを入力してください");
+            }
+
+            /*
             // パネルからデータグリッドビューを取得
             //DataGridView ScheduleDis = DataPanel.Controls.OfType<DataGridView>().FirstOrDefault();
 
@@ -486,9 +483,7 @@ namespace kozintest01
             // データテーブルを取得
             //DataTable adddataTable = (DataTable)ScheduleDis.DataSource;
 
-            // 新しいデータを追加
-            //adddataTable.Rows.Add("new task", 10, DateTime.Now.AddDays(1));
-
+            
             // データグリッドビューを更新
             //ScheduleDis.Refresh();
 
@@ -497,7 +492,7 @@ namespace kozintest01
             //Control.ControlCollection controls = DataPanel.Controls;
 
             //DataGridView ScheduleDis = null;
-            /*
+            
             DataTable adddataTable = GetDataTable(dataTable); // データテーブルを取得する例
             //ScheduleDis.DataSource = dataTable; // データテーブルをDataGridViewにバインドする
     
