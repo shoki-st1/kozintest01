@@ -464,11 +464,13 @@ namespace kozintest01
         //予定追加ボタン動作関数
         private void AddButton_Click(object sender,EventArgs e)
         {
-            //やることを入力していたなら
-            if (string.IsNullOrEmpty(nameTextbox.Text))
+            //文字列に代入
+            string temp = nameTextbox.Text;
+            //やることを入力していたなら(textboxがnullになっている)
+            if (temp != null)
             {
                 // データを追加する
-                dataTable.Rows.Add(nameTextbox.Text, 1, DateTime.Now);
+                dataTable.Rows.Add(temp, 1, DateTime.Now);
             }
             else
             {
@@ -519,7 +521,19 @@ namespace kozintest01
         //予定削除ボタン
         private void DeleteButton_Click(object sender, EventArgs e)
         {
+            // DataGridViewで選択された行を取得
+            if (ScheduleDis.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = ScheduleDis.SelectedRows[0];
 
+                //選択された行を削除
+                //削除で行を詰める
+                ScheduleDis.Rows.Remove(selectedRow);
+            }
+            else
+            {
+                MessageBox.Show("削除する行を選択してください。");
+            }
         }
 
 
