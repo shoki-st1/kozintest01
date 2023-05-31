@@ -25,9 +25,11 @@ namespace kozintest01
             期限選択
         一列で表示
         */
-        TextBox nameTextbox;
-        ComboBox rank;
-        DateTimePicker finish;
+        private TextBox nameTextbox;
+        private ComboBox rank;
+        private DateTimePicker finish;
+
+        string nametemp = "name";
 
         //入力名ラベル
         private Label nameDis, rankDis, finiDis;
@@ -194,10 +196,29 @@ namespace kozintest01
             //位置
             nameTextbox.Location = new Point(30, 100);
 
+            //初期text
+            nameTextbox.Text = nametemp;
+
             //form追加
             this.Controls.Add(nameTextbox);
 
+            // テキストボックスの TextChanged イベントハンドラの設定
+            nameTextbox.TextChanged += nameTextbox_TextChanged;
+
         }
+
+        // テキストボックスの TextChanged イベントハンドラ
+        private void nameTextbox_TextChanged(object sender, EventArgs e)
+        {
+            // テキストボックスのテキストが変更された際に実行される処理
+            // ここでテキストの反映や処理を行います
+            TextBox textBox = (TextBox)sender; // イベント発生元のテキストボックスを取得
+            string newText = textBox.Text; // 変更後のテキストを取得
+
+            MessageBox.Show(newText);
+                                            // その他の処理
+        }
+
         //"やること"のラベル
         public void SetNameLabel()
         {
@@ -221,6 +242,7 @@ namespace kozintest01
             //formに追加
             this.Controls.Add(nameDis);
         }
+
 
         //優先度コンボボックス設定
         public void SetRank()
@@ -466,11 +488,17 @@ namespace kozintest01
         {
             //文字列に代入
             string temp = nameTextbox.Text;
+            //MessageBox.Show(nameTextbox.Text);
+            int selectedIndex = rank.SelectedIndex; // 選択された項目のインデックス
+
             //やることを入力していたなら(textboxがnullになっている)
-            if (temp != null)
+            if (!string.IsNullOrEmpty(temp))
             {
+                
+                // 表に追加する処理
+                dataTable.Rows.Add(temp, selectedIndex, DateTime.Now);
                 // データを追加する
-                dataTable.Rows.Add(temp, 1, DateTime.Now);
+
             }
             else
             {
