@@ -369,6 +369,37 @@ namespace kozintest01
             this.Controls.Add(this.LinkButton);
         }
 
+        public void SetDeleButton()
+        {
+            DeltimeButton = new System.Windows.Forms.Button();
+            DeltimeButton.FlatStyle = FlatStyle.Flat;
+            DeltimeButton.FlatAppearance.BorderSize = 0;
+
+            //ボタンの色
+            DeltimeButton.BackColor = Color.Silver;
+            DeltimeButton.FlatAppearance.MouseOverBackColor = Color.Gray;
+            DeltimeButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+
+            this.DeltimeButton.Name = "Deltime";
+            this.DeltimeButton.Text = "＜";
+            this.DeltimeButton.Font = new Font("UTF-8", 10);
+            this.DeltimeButton.TextAlign = ContentAlignment.MiddleCenter;
+
+            //ボタン大きさ
+            this.DeltimeButton.Size = new System.Drawing.Size(70, 60);
+            //位置
+            this.DeltimeButton.Location = new Point(0, 0);
+
+
+            //イベント
+            this.DeltimeButton.Click += new EventHandler(this.DeltimeButton_Click);
+            this.DeltimeButton.Parent = this;
+            this.DeltimeButton.BringToFront();
+            this.ResumeLayout(false);
+            this.Controls.Add(DeltimeButton);
+
+        }
+
         //現在時刻表示ラベル設定
         public void SetTimeDis()
         {
@@ -433,32 +464,7 @@ namespace kozintest01
 
             //---------------------------------------------------------------------------------------------
             //???
-            DeltimeButton = new System.Windows.Forms.Button();
-            DeltimeButton.FlatStyle = FlatStyle.Flat;
-            DeltimeButton.FlatAppearance.BorderSize = 0;
-
-            //ボタンの色
-            DeltimeButton.BackColor = Color.Silver;
-            DeltimeButton.FlatAppearance.MouseOverBackColor = Color.Gray;
-            DeltimeButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
-
-            this.DeltimeButton.Name = "Deltime";
-            this.DeltimeButton.Text = "＜";
-            this.DeltimeButton.Font = new Font("UTF-8", 10);
-            this.DeltimeButton.TextAlign = ContentAlignment.MiddleCenter;
-
-            //ボタン大きさ
-            this.DeltimeButton.Size = new System.Drawing.Size(70, 60);
-            //位置
-            this.DeltimeButton.Location = new Point(0, 0);
-
-
-            //イベント
-            this.DeltimeButton.Click += new EventHandler(this.DeltimeButton_Click);
-            this.DeltimeButton.Parent = this;
-            this.DeltimeButton.BringToFront();
-            this.ResumeLayout(false);
-            this.Controls.Add(DeltimeButton);
+            SetDeleButton();
 
             //---------------------------------------------------------------------------------------------
             //現在時刻表示
@@ -488,14 +494,13 @@ namespace kozintest01
             //文字列に代入
             string temp = nameTextbox.Text;
             int selectedIndex = rank.SelectedIndex; // 選択された項目のインデックス
+            DateTime selectedDate = finish.Value;
 
             //やることを入力していたなら(textboxがnullになっている)
             if (!string.IsNullOrEmpty(temp))
             {
-                
                 // 表に追加する処理
-                dataTable.Rows.Add(temp, (selectedIndex + 1), DateTime.Now);
-                // データを追加する
+                dataTable.Rows.Add(temp, (selectedIndex + 1), selectedDate);
 
             }
             else
