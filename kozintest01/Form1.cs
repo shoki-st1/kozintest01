@@ -98,7 +98,11 @@ namespace kozintest01
             dataTable.Columns.Add("優先度", typeof(int));
             dataTable.Columns.Add("期限", typeof(DateTime));
             //テストデータ
-            dataTable.Rows.Add("test", 25, DateTime.Now);
+            //dataTable.Rows.Add("test", 25, DateTime.Now);
+
+            //ファイルからの読み込み
+            ReadFolder();
+
 
             //カラムの自動生成設定trueで自動
             //ScheduleDis.AutoGenerateColumns = true;
@@ -117,6 +121,49 @@ namespace kozintest01
             //パネルの上に乗せる
             DataPanel.Controls.Add(ScheduleDis);
 
+        }
+
+
+        //フォルダ読み込み
+        public void ReadFolder()
+        {
+            string folderPath = "./TaskReadFolder";
+
+            if (Directory.Exists(folderPath))
+            {
+                //フォルダがある
+                MessageBox.Show("フォルダがある");
+            }
+            else
+            {
+                // フォルダが存在しない場合の処理
+                //フォルダを作る
+                MessageBox.Show("フォルダを作る");
+                Directory.CreateDirectory(folderPath);
+            }
+            //ファイル読み込み
+            ReadFile();
+
+        }
+
+        //ファイル読み込み
+        public void ReadFile()
+        {
+            // フォルダが存在する場合ファイルがあるか
+            string filePath = "./TaskReadFolder";
+            if (!File.Exists(filePath))
+            {
+                MessageBox.Show("ファイルを作る");
+                // ファイルが存在しない場合、新規に作成します
+                using (StreamWriter sw = File.CreateText(filePath))
+                {
+                }
+            }
+            //ある場合読み込み
+            else
+            {
+                MessageBox.Show("ファイルがある");
+            }
         }
 
 
@@ -490,7 +537,6 @@ namespace kozintest01
         //予定追加ボタン動作関数
         private void AddButton_Click(object sender,EventArgs e)
         {
-
             //文字列に代入
             string temp = nameTextbox.Text;
             int selectedIndex = rank.SelectedIndex; // 選択された項目のインデックス
@@ -499,7 +545,7 @@ namespace kozintest01
             //やることを入力していたなら(textboxがnullになっている)
             if (!string.IsNullOrEmpty(temp))
             {
-                // 表に追加する処理
+                // 表に追加する処理(やること、優先度、期限)
                 dataTable.Rows.Add(temp, (selectedIndex + 1), selectedDate);
 
             }
