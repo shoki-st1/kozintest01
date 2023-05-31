@@ -132,13 +132,13 @@ namespace kozintest01
             if (Directory.Exists(folderPath))
             {
                 //フォルダがある
-                MessageBox.Show("フォルダがある");
+                //MessageBox.Show("フォルダがある");
             }
             else
             {
                 // フォルダが存在しない場合の処理
                 //フォルダを作る
-                MessageBox.Show("フォルダを作る");
+                //MessageBox.Show("フォルダを作る");
                 Directory.CreateDirectory(folderPath);
             }
             //ファイル読み込み
@@ -153,7 +153,7 @@ namespace kozintest01
             string filePath = "./TaskReadFolder/Taskun.csv";
             if (!File.Exists(filePath))
             {
-                MessageBox.Show("ファイルを作る");
+                //MessageBox.Show("ファイルを作る");
                 // ファイルが存在しない場合、新規に作成します
                 using (StreamWriter sw = File.CreateText(filePath))
                 {
@@ -162,10 +162,23 @@ namespace kozintest01
             //ある場合読み込み
             else
             {
-                MessageBox.Show("ファイルがある");
+                //MessageBox.Show("ファイルがある");
+                //ファイルから読み込む
+                ReadFileTable();
             }
         }
 
+        //ファイル読み込み
+        public void ReadFileTable()
+        {
+
+        }
+
+        //ファイルへの書き込み
+        public void WriteFile()
+        {
+
+        }
 
         //追加ボタンの設定
         public void Addbottun()
@@ -548,6 +561,10 @@ namespace kozintest01
                 // 表に追加する処理(やること、優先度、期限)
                 dataTable.Rows.Add(temp, (selectedIndex + 1), selectedDate);
 
+
+                //ファイル書き込み
+                WriteFile();
+
             }
             else
             {
@@ -606,6 +623,10 @@ namespace kozintest01
                 //選択された行を削除
                 //削除で行を詰める
                 ScheduleDis.Rows.Remove(selectedRow);
+
+
+                //ファイル書き込み
+                WriteFile();
             }
             else
             {
