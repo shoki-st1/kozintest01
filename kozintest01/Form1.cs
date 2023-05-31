@@ -149,8 +149,8 @@ namespace kozintest01
         //ファイル読み込み
         public void ReadFile()
         {
-            // フォルダが存在する場合ファイルがあるか
-            string filePath = "./TaskReadFolder";
+            //ファイルが存在する場合ファイルがあるか
+            string filePath = "./TaskReadFolder/Taskun.csv";
             if (!File.Exists(filePath))
             {
                 MessageBox.Show("ファイルを作る");
