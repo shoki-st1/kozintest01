@@ -29,8 +29,6 @@ namespace kozintest01
         private ComboBox rank;
         private DateTimePicker finish;
 
-        string nametemp = "name";
-
         //入力名ラベル
         private Label nameDis, rankDis, finiDis;
 
@@ -70,8 +68,8 @@ namespace kozintest01
             //表
             InitializeDataGridView();
 
-
-            this.Load += Form1_Load;
+            //フォームが常にリセットされる
+            //this.Load += Form1_Load;
         }
 
 
@@ -197,7 +195,7 @@ namespace kozintest01
             nameTextbox.Location = new Point(30, 100);
 
             //初期text
-            nameTextbox.Text = nametemp;
+            nameTextbox.Text = "";
 
             //form追加
             this.Controls.Add(nameTextbox);
@@ -215,7 +213,7 @@ namespace kozintest01
             TextBox textBox = (TextBox)sender; // イベント発生元のテキストボックスを取得
             string newText = textBox.Text; // 変更後のテキストを取得
 
-            MessageBox.Show(newText);
+            //MessageBox.Show(newText);
                                             // その他の処理
         }
 
@@ -486,9 +484,9 @@ namespace kozintest01
         //予定追加ボタン動作関数
         private void AddButton_Click(object sender,EventArgs e)
         {
+
             //文字列に代入
             string temp = nameTextbox.Text;
-            //MessageBox.Show(nameTextbox.Text);
             int selectedIndex = rank.SelectedIndex; // 選択された項目のインデックス
 
             //やることを入力していたなら(textboxがnullになっている)
@@ -496,7 +494,7 @@ namespace kozintest01
             {
                 
                 // 表に追加する処理
-                dataTable.Rows.Add(temp, selectedIndex, DateTime.Now);
+                dataTable.Rows.Add(temp, (selectedIndex + 1), DateTime.Now);
                 // データを追加する
 
             }
