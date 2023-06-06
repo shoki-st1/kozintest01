@@ -100,10 +100,6 @@ namespace kozintest01
             //テストデータ
             //dataTable.Rows.Add("test", 25, DateTime.Now);
 
-            //ファイルからの読み込み
-            ReadFolder();
-
-
             //カラムの自動生成設定trueで自動
             //ScheduleDis.AutoGenerateColumns = true;
 
@@ -127,8 +123,10 @@ namespace kozintest01
         //フォルダ読み込み
         public void ReadFolder()
         {
+            //フォルダパス
             string folderPath = "./TaskReadFolder";
 
+            //フォルダの判定
             if (Directory.Exists(folderPath))
             {
                 //フォルダがある
@@ -149,8 +147,9 @@ namespace kozintest01
         //ファイル読み込み
         public void ReadFile()
         {
-            //ファイルが存在する場合ファイルがあるか
+            //パス
             string filePath = "./TaskReadFolder/Taskun.csv";
+            //ファイルが存在する場合ファイルがあるか
             if (!File.Exists(filePath))
             {
                 //MessageBox.Show("ファイルを作る");
@@ -162,23 +161,60 @@ namespace kozintest01
             //ある場合読み込み
             else
             {
-                //MessageBox.Show("ファイルがある");
                 //ファイルから読み込む
-                ReadFileTable();
+                using (StreamReader reader = new StreamReader(filePath, Encoding.GetEncoding("UTF-8")))
+                {
+                    //ファイルの最後まで繰り返し
+                    while (!reader.EndOfStream)
+                    {
+                        //1行ずつ取得
+                        string dataLine = reader.ReadLine();
+                        //,で区切り
+                        string[] values = dataLine.Split(',');
+
+                        // 新しい行を作成し、値を追加する
+                        DataRow row = dataTable.NewRow();
+                        for (int i = 0; i < values.Length; i++)
+                        {
+                            row[i] = values[i];
+                        }
+                        //表に追加
+                        dataTable.Rows.Add(row);
+                    }
+                }
             }
-        }
-
-        //ファイル読み込み
-        public void ReadFileTable()
-        {
-
         }
 
         //ファイルへの書き込み
         public void WriteFile()
         {
+            //既存ファイル削除？
 
+            using (StreamWriter writer = new StreamWriter("./TaskReadFolder/Taskun.csv", false, Encoding.UTF8))
+            {
+                // ヘッダー行を書き込む
+                string headerLine = string.Join(",", dataTable.Columns.Cast<DataColumn>().Select(c => c.ColumnName));
+                writer.WriteLine(headerLine);
+
+
+                //最初の行も入っている
+                // データ行を書き込む
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string dataLine = string.Join(",", row.ItemArray);
+                    //1行ずつ
+                    writer.WriteLine(dataLine);
+                }
+            }
+            
+
+            //MessageBox.Show("書き込み処理");
         }
+
+
+
+
+
 
         //追加ボタンの設定
         public void Addbottun()
@@ -429,6 +465,7 @@ namespace kozintest01
             this.Controls.Add(this.LinkButton);
         }
 
+        //???
         public void SetDeleButton()
         {
             DeltimeButton = new System.Windows.Forms.Button();
@@ -544,6 +581,10 @@ namespace kozintest01
             namecolumn.Width = 130;
             ranckcolumn.Width = 50;
             finishcolumn.Width = 110;
+
+
+            //ファイルからの読み込み
+            ReadFolder();
         }
 
         
@@ -561,7 +602,7 @@ namespace kozintest01
                 // 表に追加する処理(やること、優先度、期限)
                 dataTable.Rows.Add(temp, (selectedIndex + 1), selectedDate);
 
-
+                //追加
                 //ファイル書き込み
                 WriteFile();
 
@@ -624,12 +665,13 @@ namespace kozintest01
                 //削除で行を詰める
                 ScheduleDis.Rows.Remove(selectedRow);
 
-
+                //削除
                 //ファイル書き込み
                 WriteFile();
             }
             else
             {
+                //選択されずにボタンを押されたとき
                 MessageBox.Show("削除する行を選択してください。");
             }
         }
