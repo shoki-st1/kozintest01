@@ -791,21 +791,18 @@ namespace kozintest01
     //新たなform
     public class AddForm : Form
     {
-        public AddForm()
-        {
-            //formの設定呼び出し
-            SetForm();
+        //タイマーの定義
+        private Timer AratTimer;
+        //ボタン
+        private Button timeButton;
 
+        //入力テキストボックス
+        private TextBox timetextBox;
 
-            Label label = new Label();
-            label.Text = "This is a child form.";
-            label.Location = new Point(50, 50);
-            label.AutoSize = true;
-            Controls.Add(label);
-        }
+        //タイマーが動いているかのフラグ
+        Boolean timeflag = false;
 
-
-        //formの情報
+        //formの設定
         public void SetForm()
         {
             this.Text = "arat";
@@ -820,6 +817,110 @@ namespace kozintest01
             this.MaximumSize = new Size(150, 150);
             this.MinimumSize = new Size(150, 150);
         }
+
+        //テキストボックスの設定
+        public void SetTimeText()
+        {
+            //宣言
+            timetextBox = new TextBox();
+            //サイズ横縦
+            timetextBox.Width = 100;
+            timetextBox.Height = 50;
+
+            timetextBox.KeyPress += NumericTextBox_KeyPress; // KeyPressイベントハンドラを追加
+            //form
+            Controls.Add(timetextBox);
+        }
+
+        //テキストボックス数値のみ入力の関数
+        private void NumericTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // 入力されたキーが数値でない場合はイベントをキャンセル
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '\b') // 数字でないかつバックスペースでない場合
+            {
+                e.Handled = true;
+            }
+        }
+
+        //タイマーボタンの設定
+        //開始
+        public void TimeButton()
+        {
+            //宣言
+            Button timeButton = new Button();
+            //テキスト
+            timeButton.Text = "Start Timer";
+            //イベント
+            timeButton.Click += TimeButton_Click;
+
+            //位置
+            timeButton.Location = new Point(50, 100);
+            //form
+            Controls.Add(timeButton);
+        }
+
+        //ボタンを押すとタイマーの制御
+        private void TimeButton_Click(object sender, EventArgs e)
+        {
+            //フラグの判定
+            if(timeflag == false)
+            {
+                AratTimer.Start(); // タイマーを開始
+                //テキストの変更
+                timeButton.Text = "Stop Timer";
+                //フラグをtrue
+                timeflag = true;
+            }
+            else
+            {
+                AratTimer.Stop(); // タイマーを停止
+                //テキストの変更
+                timeButton.Text = "Start Timer";
+                //フラグをfalse
+                timeflag = false;
+            }
+            
+        }
+
+        //タイマーの設定
+        public void AratSetTimer()
+        {
+            //宣言
+            AratTimer = new Timer();
+            AratTimer.Interval = 1000; // タイマーの間隔を1秒に設定
+            AratTimer.Tick += AratTimer_Tick; // タイマーのTickイベントハンドラを追加
+            //タイマーの停止
+            AratTimer.Stop();
+        }
+
+        //タイマーの動作
+        private void AratTimer_Tick(object sender, EventArgs e)
+        {
+            // タイマーのTickイベントが発生したときに実行される処理
+            //テキストボックスの初期値を判定でプラス、マイナスを決める
+
+
+        }
+
+
+        public AddForm()
+        {
+            //formの設定呼び出し
+            SetForm();
+
+            //タイマーの設定呼び出し
+            AratSetTimer();
+
+            //タイマーボタンの設定呼び出し
+            TimeButton();
+
+            //テキストボックスの呼び出し
+            SetTimeText();
+
+
+        }
+
+
     }
 
 }
