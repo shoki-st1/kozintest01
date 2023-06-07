@@ -42,11 +42,12 @@ namespace kozintest01
         //リンク集に飛ぶためのボタン宣言
         private Button LinkButton;
 
-        //???
-        private Button DeltimeButton;
+        //新しくformを開く
+        private Button NewFormButton;
 
         //タイマー宣言
-        Timer DateTimer;
+        //現在時刻のタイマー
+        Timer nowTimer;
 
         //定義
         private Panel DataPanel;
@@ -226,8 +227,6 @@ namespace kozintest01
             //文字の配列として返す
             return values.ToArray();
         }
-
-
 
         //ファイルへの書き込み
         public void WriteFile()
@@ -519,36 +518,53 @@ namespace kozintest01
             this.Controls.Add(this.LinkButton);
         }
 
-        //???
-        public void SetDeleButton()
+        //formを開く作るボタンの設定
+        public void SetNewFormButton()
         {
-            DeltimeButton = new System.Windows.Forms.Button();
-            DeltimeButton.FlatStyle = FlatStyle.Flat;
-            DeltimeButton.FlatAppearance.BorderSize = 0;
+            NewFormButton = new System.Windows.Forms.Button();
+            NewFormButton.FlatStyle = FlatStyle.Flat;
+            NewFormButton.FlatAppearance.BorderSize = 0;
 
             //ボタンの色
-            DeltimeButton.BackColor = Color.Silver;
-            DeltimeButton.FlatAppearance.MouseOverBackColor = Color.Gray;
-            DeltimeButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
+            NewFormButton.BackColor = Color.Silver;
+            NewFormButton.FlatAppearance.MouseOverBackColor = Color.Gray;
+            NewFormButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
 
-            this.DeltimeButton.Name = "Deltime";
-            this.DeltimeButton.Text = "＜";
-            this.DeltimeButton.Font = new Font("UTF-8", 10);
-            this.DeltimeButton.TextAlign = ContentAlignment.MiddleCenter;
+            this.NewFormButton.Name = "Deltime";
+            this.NewFormButton.Text = "＜";
+            this.NewFormButton.Font = new Font("UTF-8", 10);
+            this.NewFormButton.TextAlign = ContentAlignment.MiddleCenter;
 
             //ボタン大きさ
-            this.DeltimeButton.Size = new System.Drawing.Size(70, 60);
+            this.NewFormButton.Size = new System.Drawing.Size(70, 60);
             //位置
-            this.DeltimeButton.Location = new Point(0, 0);
+            this.NewFormButton.Location = new Point(0, 0);
 
 
             //イベント
-            this.DeltimeButton.Click += new EventHandler(this.DeltimeButton_Click);
-            this.DeltimeButton.Parent = this;
-            this.DeltimeButton.BringToFront();
+            this.NewFormButton.Click += new EventHandler(this.NewFormButton_Click);
+            this.NewFormButton.Parent = this;
+            this.NewFormButton.BringToFront();
             this.ResumeLayout(false);
-            this.Controls.Add(DeltimeButton);
+            this.Controls.Add(NewFormButton);
 
+        }
+
+        //現在時刻タイマー
+        public void SetnowTimer()
+        {
+            // タイマーの初期化
+            nowTimer = new Timer();
+            nowTimer.Interval = 1000; // 1秒ごとに更新
+            nowTimer.Tick += Timer_Tick;
+            nowTimer.Start();
+        }
+
+        //現在時刻表示
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            // タイマーのイベントハンドラでラベルのテキストを更新
+            TimeDis.Text = DateTime.Now.ToString("yyyy/MM/dd");
         }
 
         //現在時刻表示ラベル設定
@@ -558,8 +574,6 @@ namespace kozintest01
             //作成
             TimeDis = new System.Windows.Forms.Label();
 
-            //現在の時間を表示させる
-            TimeDis.Text = DateTime.Now.ToString("yyyy/MM/dd");
             //フォント
             TimeDis.Font = new Font("UTF-8", 10);
 
@@ -571,17 +585,20 @@ namespace kozintest01
             TimeDis.TextAlign = ContentAlignment.MiddleCenter;
 
             //ラベルの大きさ(formサイズ-(戻すボタン+進むボタン))
-            TimeDis.Size = new System.Drawing.Size(this.ClientSize.Width - (DeltimeButton.Width + LinkButton.Width), 60);
+            TimeDis.Size = new System.Drawing.Size(this.ClientSize.Width - (NewFormButton.Width + LinkButton.Width), 60);
             //位置(DeltimeButtonの横幅を足した位置)
-            TimeDis.Location = new Point(0 + DeltimeButton.Width, 0);
+            TimeDis.Location = new Point(0 + NewFormButton.Width, 0);
 
             //formに追加
             this.Controls.Add(TimeDis);
+
+            //タイマーの設定と表示
+            SetnowTimer();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Name = "Taskun";
+            this.Text = "Taskun";
             //フォーム背景色指定
             this.BackColor = Color.Aquamarine;
 
@@ -618,7 +635,7 @@ namespace kozintest01
 
             //---------------------------------------------------------------------------------------------
             //???
-            SetDeleButton();
+            SetNewFormButton();
 
             //---------------------------------------------------------------------------------------------
             //現在時刻表示
@@ -751,14 +768,58 @@ namespace kozintest01
         }
 
 
-        //???
-        //時間戻す
-        public void DeltimeButton_Click(object sender, EventArgs e)
+        //formを作る
+        public void NewFormButton_Click(object sender, EventArgs e)
         {
+            //ボタンを無効にすることでformの無限生成を止める
+            NewFormButton.Enabled = false;
 
+            //新しいform
+            AddForm childForm = new AddForm();
+            childForm.FormClosed += ChildForm_FormClosed; // 子フォームの閉じられたイベントにハンドラを追加
+            childForm.Show();
+        }
+
+        //formが閉じられた時の処理
+        private void ChildForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // ボタンを有効にする
+            NewFormButton.Enabled = true;
+        }
+    }
+
+    //新たなform
+    public class AddForm : Form
+    {
+        public AddForm()
+        {
+            //formの設定呼び出し
+            SetForm();
+
+
+            Label label = new Label();
+            label.Text = "This is a child form.";
+            label.Location = new Point(50, 50);
+            label.AutoSize = true;
+            Controls.Add(label);
         }
 
 
+        //formの情報
+        public void SetForm()
+        {
+            this.Text = "arat";
+            //フォーム背景色指定
+            this.BackColor = Color.Orange;
 
+            //form指定
+            this.Width = 150;
+            this.Height = 150;
+
+            //form拡大縮小の指定
+            this.MaximumSize = new Size(150, 150);
+            this.MinimumSize = new Size(150, 150);
+        }
     }
+
 }
