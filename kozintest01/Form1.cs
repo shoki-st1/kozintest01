@@ -169,7 +169,7 @@ namespace kozintest01
                     {
                         //1行ずつ取得
                         string dataLine = reader.ReadLine();
-                        //,で区切り
+                        //エスケープ処理済みを取得
                         string[] values = ParseCsvLine(dataLine);
 
                         // 新しい行を作成し、値を追加する
@@ -178,7 +178,6 @@ namespace kozintest01
                         {
                             //文字列型にする
                             string value = values[i];
-
                             
                             row[i] = value;
                         }
@@ -236,24 +235,30 @@ namespace kozintest01
             //ファイルに書き込み(文字コードUTF-8)
             using (StreamWriter writer = new StreamWriter("./TaskReadFolder/Taskun.csv", false, Encoding.UTF8))
             {
-
-                for (int i = 1; i < dataTable.Rows.Count; i++)
+                //表の最後まで
+                for (int i = 0; i < dataTable.Rows.Count; i++)
                 {
+                    //1行のデータを取得
                     DataRow row = dataTable.Rows[i];
                     List<string> escapedValues = new List<string>();
 
+                    //1行のデータを配列として終わりまで繰り返す
                     foreach (var item in row.ItemArray)
                     {
+                        //文字列として取り出す
                         string value = item.ToString();
                         string escapedValue = value.Replace("\"", "\"\""); // ダブルクォーテーションをエスケープ
+                        //カンマ、改行の判定
                         if (escapedValue.Contains(",") || escapedValue.Contains("\n"))
                         {
                             escapedValue = "\"" + escapedValue + "\""; // カンマや改行が含まれる場合は値をダブルクォーテーションで囲む
                         }
+                        //リストに追加
                         escapedValues.Add(escapedValue);
                     }
 
                     string dataLine = string.Join(",", escapedValues);
+                    //ファイルに書き込み
                     writer.WriteLine(dataLine);
                 }
             }
@@ -491,7 +496,7 @@ namespace kozintest01
             LinkButton.FlatAppearance.BorderColor = Color.Black;
 
             //ボタンの色
-            LinkButton.BackColor = Color.Silver;
+            LinkButton.BackColor = Color.LightSkyBlue;
             LinkButton.FlatAppearance.MouseOverBackColor = Color.Gray;
             LinkButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
 
@@ -577,6 +582,8 @@ namespace kozintest01
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Name = "Taskun";
+            //フォーム背景色指定
+            this.BackColor = Color.Aquamarine;
 
             //form指定
             this.Width = 450;
