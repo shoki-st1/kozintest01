@@ -170,13 +170,17 @@ namespace kozintest01
                         //1行ずつ取得
                         string dataLine = reader.ReadLine();
                         //,で区切り
-                        string[] values = dataLine.Split(',');
+                        string[] values = ParseCsvLine(dataLine);
 
                         // 新しい行を作成し、値を追加する
                         DataRow row = dataTable.NewRow();
                         for (int i = 0; i < values.Length; i++)
                         {
-                            row[i] = values[i];
+                            //文字列型にする
+                            string value = values[i];
+
+                            
+                            row[i] = value;
                         }
                         //表に追加
                         dataTable.Rows.Add(row);
@@ -185,19 +189,71 @@ namespace kozintest01
             }
         }
 
+        // CSVの1行を解析してデータを取得する
+        private string[] ParseCsvLine(string line)
+        {
+            //CSVファイルの1行に含まれるデータを格納するためのリスト
+            List<string> values = new List<string>();
+            //データを一時的に格納するための文字列バッファ
+            StringBuilder currentValue = new StringBuilder();
+            //フラグ
+            bool inQuotes = false;
+
+            //lineの終わりまで繰り返す
+            foreach (char c in line)
+            {
+                if (c == '"')
+                {
+                    // ダブルクオートの開始または終了
+                    inQuotes = !inQuotes;
+                }
+                else if (c == ',' && !inQuotes)
+                {
+                    // 区切り文字（カンマ）で分割
+                    values.Add(currentValue.ToString());
+                    //初期化
+                    currentValue.Clear();
+                }
+                else
+                {
+                    // 文字を追加
+                    currentValue.Append(c);
+                }
+            }
+
+            // 最後のデータを追加
+            values.Add(currentValue.ToString());
+
+            //文字の配列として返す
+            return values.ToArray();
+        }
+
+
+
         //ファイルへの書き込み
         public void WriteFile()
         {
             //ファイルに書き込み(文字コードUTF-8)
             using (StreamWriter writer = new StreamWriter("./TaskReadFolder/Taskun.csv", false, Encoding.UTF8))
             {
-                
-                // データ行を書き込む
-                for (int i = 0; i < dataTable.Rows.Count; i++)
+
+                for (int i = 1; i < dataTable.Rows.Count; i++)
                 {
                     DataRow row = dataTable.Rows[i];
-                    string dataLine = string.Join(",", row.ItemArray);
-                    //1行ずつ
+                    List<string> escapedValues = new List<string>();
+
+                    foreach (var item in row.ItemArray)
+                    {
+                        string value = item.ToString();
+                        string escapedValue = value.Replace("\"", "\"\""); // ダブルクォーテーションをエスケープ
+                        if (escapedValue.Contains(",") || escapedValue.Contains("\n"))
+                        {
+                            escapedValue = "\"" + escapedValue + "\""; // カンマや改行が含まれる場合は値をダブルクォーテーションで囲む
+                        }
+                        escapedValues.Add(escapedValue);
+                    }
+
+                    string dataLine = string.Join(",", escapedValues);
                     writer.WriteLine(dataLine);
                 }
             }
@@ -205,8 +261,6 @@ namespace kozintest01
 
             //MessageBox.Show("書き込み処理");
         }
-
-
 
 
 
@@ -522,6 +576,7 @@ namespace kozintest01
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Name = "Taskun";
 
             //form指定
             this.Width = 450;
