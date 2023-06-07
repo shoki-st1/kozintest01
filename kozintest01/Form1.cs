@@ -161,7 +161,7 @@ namespace kozintest01
             //ある場合読み込み
             else
             {
-                //ファイルから読み込む
+                //ファイルから読み込む(文字コードUTF-8)
                 using (StreamReader reader = new StreamReader(filePath, Encoding.GetEncoding("UTF-8")))
                 {
                     //ファイルの最後まで繰り返し
@@ -188,19 +188,14 @@ namespace kozintest01
         //ファイルへの書き込み
         public void WriteFile()
         {
-            //既存ファイル削除？
-
+            //ファイルに書き込み(文字コードUTF-8)
             using (StreamWriter writer = new StreamWriter("./TaskReadFolder/Taskun.csv", false, Encoding.UTF8))
             {
-                // ヘッダー行を書き込む
-                string headerLine = string.Join(",", dataTable.Columns.Cast<DataColumn>().Select(c => c.ColumnName));
-                writer.WriteLine(headerLine);
-
-
-                //最初の行も入っている
+                
                 // データ行を書き込む
-                foreach (DataRow row in dataTable.Rows)
+                for (int i = 0; i < dataTable.Rows.Count; i++)
                 {
+                    DataRow row = dataTable.Rows[i];
                     string dataLine = string.Join(",", row.ItemArray);
                     //1行ずつ
                     writer.WriteLine(dataLine);
@@ -612,6 +607,9 @@ namespace kozintest01
                 MessageBox.Show("やることを入力してください");
             }
 
+            //フォーカスをテキストボックスに変更
+            nameTextbox.Focus();
+
             /*
             // パネルからデータグリッドビューを取得
             //DataGridView ScheduleDis = DataPanel.Controls.OfType<DataGridView>().FirstOrDefault();
@@ -674,6 +672,10 @@ namespace kozintest01
                 //選択されずにボタンを押されたとき
                 MessageBox.Show("削除する行を選択してください。");
             }
+
+
+            //フォーカスをテキストボックスに変更
+            nameTextbox.Focus();
         }
 
 
