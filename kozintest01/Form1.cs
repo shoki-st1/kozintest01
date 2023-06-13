@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-
+using System.Media;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 
 namespace kozintest01
@@ -799,9 +800,6 @@ namespace kozintest01
         //入力テキストボックス
         private TextBox timetextBox;
 
-        //タイマーが動いているかのフラグ
-        Boolean timeflag = false;
-
         //formの設定
         public void SetForm()
         {
@@ -826,6 +824,10 @@ namespace kozintest01
             //サイズ横縦
             timetextBox.Width = 100;
             timetextBox.Height = 50;
+            timetextBox.Font = new Font("UTF-8",10);
+
+
+            timetextBox.Location = new Point(25,50);
 
             timetextBox.KeyPress += NumericTextBox_KeyPress; // KeyPressイベントハンドラを追加
             //form
@@ -847,14 +849,14 @@ namespace kozintest01
         public void TimeButton()
         {
             //宣言
-            Button timeButton = new Button();
+            timeButton = new Button();
             //テキスト
             timeButton.Text = "Start Timer";
             //イベント
             timeButton.Click += TimeButton_Click;
 
             //位置
-            timeButton.Location = new Point(50, 100);
+            timeButton.Location = new Point(50, 80);
             //form
             Controls.Add(timeButton);
         }
@@ -862,22 +864,28 @@ namespace kozintest01
         //ボタンを押すとタイマーの制御
         private void TimeButton_Click(object sender, EventArgs e)
         {
-            //フラグの判定
-            if(timeflag == false)
+
+            //入力されていないか0以下なら
+            if (string.IsNullOrEmpty(timetextBox.Text) || int.Parse(timetextBox.Text) <= 0)
             {
-                AratTimer.Start(); // タイマーを開始
-                //テキストの変更
-                timeButton.Text = "Stop Timer";
-                //フラグをtrue
-                timeflag = true;
+                MessageBox.Show("1以上の数値を入力してください");
             }
             else
             {
-                AratTimer.Stop(); // タイマーを停止
-                //テキストの変更
-                timeButton.Text = "Start Timer";
-                //フラグをfalse
-                timeflag = false;
+                //フラグの判定
+                if (AratTimer.Enabled == false)
+                {
+                    AratTimer.Enabled = true; // タイマーを開始
+                    //テキストの変更
+                    timeButton.Text = "Stop Timer";
+                }
+                else
+                {
+                    AratTimer.Enabled = false; // タイマーを停止
+                                               //テキストの変更
+                    timeButton.Text = "Start Timer";
+                }
+
             }
             
         }
@@ -888,17 +896,38 @@ namespace kozintest01
             //宣言
             AratTimer = new Timer();
             AratTimer.Interval = 1000; // タイマーの間隔を1秒に設定
+            //タイマーの無効
+            AratTimer.Enabled = false;
             AratTimer.Tick += AratTimer_Tick; // タイマーのTickイベントハンドラを追加
-            //タイマーの停止
-            AratTimer.Stop();
         }
 
-        //タイマーの動作
+        //タイマーの動作(1秒間)
         private void AratTimer_Tick(object sender, EventArgs e)
         {
             // タイマーのTickイベントが発生したときに実行される処理
-            //テキストボックスの初期値を判定でプラス、マイナスを決める
+            if(int.Parse(timetextBox.Text) <= 0)
+            {
+                //時間切れ
+                AratTimer.Enabled = false;
+                // 警告音を再生
+                SystemSounds.Exclamation.Play();
+                //通知
+                MessageBox.Show("終わり");
+                timeButton.Text = "Start Timer";
+                //フォーカスを持っていく
+                timetextBox.Focus();
 
+            }
+            else
+            {
+                //1ずつ減らす処理
+                int temp;
+                //intに変換
+                temp = int.Parse(timetextBox.Text);
+                temp--;
+                //文字に直す
+                timetextBox.Text = temp.ToString();
+            }
 
         }
 
