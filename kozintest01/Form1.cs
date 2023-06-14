@@ -70,8 +70,6 @@ namespace kozintest01
             //表
             InitializeDataGridView();
 
-            //フォームが常にリセットされる
-            //this.Load += Form1_Load;
         }
 
 
@@ -99,12 +97,6 @@ namespace kozintest01
             dataTable.Columns.Add("やること", typeof(string));
             dataTable.Columns.Add("優先度", typeof(int));
             dataTable.Columns.Add("期限", typeof(DateTime));
-            //テストデータ
-            //dataTable.Rows.Add("test", 25, DateTime.Now);
-
-            //カラムの自動生成設定trueで自動
-            //ScheduleDis.AutoGenerateColumns = true;
-
         }
 
         //表の設定関数
@@ -120,7 +112,6 @@ namespace kozintest01
             DataPanel.Controls.Add(ScheduleDis);
 
         }
-
 
         //フォルダ読み込み
         public void ReadFolder()
@@ -143,7 +134,6 @@ namespace kozintest01
             }
             //ファイル読み込み
             ReadFile();
-
         }
 
         //ファイル読み込み
@@ -262,13 +252,8 @@ namespace kozintest01
                     writer.WriteLine(dataLine);
                 }
             }
-            
-
             //MessageBox.Show("書き込み処理");
         }
-
-
-
 
         //追加ボタンの設定
         public void Addbottun()
@@ -312,7 +297,7 @@ namespace kozintest01
             //バックカラー
             DeleteButton.BackColor = Color.LightBlue;
             //マウス押す、通る色
-            DeleteButton.FlatAppearance.MouseOverBackColor = Color.Gray;
+            DeleteButton.FlatAppearance.MouseOverBackColor = Color.WhiteSmoke;
             DeleteButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
 
             //表示テキスト設定
@@ -363,8 +348,6 @@ namespace kozintest01
             TextBox textBox = (TextBox)sender; // イベント発生元のテキストボックスを取得
             string newText = textBox.Text; // 変更後のテキストを取得
 
-            //MessageBox.Show(newText);
-                                            // その他の処理
         }
 
         //"やること"のラベル
@@ -415,9 +398,6 @@ namespace kozintest01
             //formに乗せる
             this.Controls.Add(rank);
 
-            //選択されたアイテムの要素数
-            //int selectedIndex = name.selectedIndex;
-
         }
 
         //"優先度"ラベル
@@ -449,7 +429,7 @@ namespace kozintest01
         {
             //期限選択
             finish = new DateTimePicker();
-
+            //フォント
             finish.Font = new Font("UTF-8", 10);
 
             //サイズ
@@ -459,7 +439,6 @@ namespace kozintest01
 
             //formに追加
             this.Controls.Add(finish);
-
         }
 
         //"期限日"ラベル
@@ -522,6 +501,7 @@ namespace kozintest01
         //アラームformを開く作るボタンの設定
         public void SetNewFormButton()
         {
+            //ボタンの定義
             NewFormButton = new System.Windows.Forms.Button();
             NewFormButton.FlatStyle = FlatStyle.Flat;
             NewFormButton.FlatAppearance.BorderSize = 0;
@@ -531,6 +511,7 @@ namespace kozintest01
             NewFormButton.FlatAppearance.MouseOverBackColor = Color.Gray;
             NewFormButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
 
+            //フォント右寄せ
             this.NewFormButton.Name = "Formbutton";
             this.NewFormButton.Text = "⌚";
             this.NewFormButton.Font = new Font("UTF-8", 10);
@@ -541,14 +522,12 @@ namespace kozintest01
             //位置
             this.NewFormButton.Location = new Point(0, 0);
 
-
             //イベント
             this.NewFormButton.Click += new EventHandler(this.NewFormButton_Click);
             this.NewFormButton.Parent = this;
             this.NewFormButton.BringToFront();
             this.ResumeLayout(false);
             this.Controls.Add(NewFormButton);
-
         }
 
         //現在時刻タイマー
@@ -558,6 +537,7 @@ namespace kozintest01
             nowTimer = new Timer();
             nowTimer.Interval = 1000; // 1秒ごとに更新
             nowTimer.Tick += Timer_Tick;
+            //タイマーのスタート
             nowTimer.Start();
         }
 
@@ -614,7 +594,6 @@ namespace kozintest01
             //---------------------------------------------------------------------------------------------
             //追加ボタン
             Addbottun();
-
             //削除ボタン
             Deletebutton();
 
@@ -633,16 +612,12 @@ namespace kozintest01
             //---------------------------------------------------------------------------------------------
             //リンクボタン
             SetLinkButton();
-
             //---------------------------------------------------------------------------------------------
-            //???
+            //アラームボタン
             SetNewFormButton();
-
             //---------------------------------------------------------------------------------------------
             //現在時刻表示
             SetTimeDis();
-
-
             //反映後じゃないとデータがない
             //列の大きさ変更、カラムの要素を代入
             DataGridViewColumn namecolumn = ScheduleDis.Columns[0];
@@ -651,13 +626,10 @@ namespace kozintest01
 
             //列の右寄せ
             ranckcolumn.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
             //列の幅指定
             namecolumn.Width = 130;
             ranckcolumn.Width = 50;
             finishcolumn.Width = 110;
-
-
             //ファイルからの読み込み
             ReadFolder();
         }
@@ -680,7 +652,6 @@ namespace kozintest01
                 //追加
                 //ファイル書き込み
                 WriteFile();
-
             }
             else
             {
@@ -689,45 +660,6 @@ namespace kozintest01
 
             //フォーカスをテキストボックスに変更
             nameTextbox.Focus();
-
-            /*
-            // パネルからデータグリッドビューを取得
-            //DataGridView ScheduleDis = DataPanel.Controls.OfType<DataGridView>().FirstOrDefault();
-
-
-            // データテーブルを取得
-            //DataTable adddataTable = (DataTable)ScheduleDis.DataSource;
-
-            
-            // データグリッドビューを更新
-            //ScheduleDis.Refresh();
-
-
-            //パネルのコントロールを取得
-            //Control.ControlCollection controls = DataPanel.Controls;
-
-            //DataGridView ScheduleDis = null;
-            
-            DataTable adddataTable = GetDataTable(dataTable); // データテーブルを取得する例
-            //ScheduleDis.DataSource = dataTable; // データテーブルをDataGridViewにバインドする
-    
-            // テキストあれば処理
-            if (string.IsNullOrEmpty(name.Text))
-            {
-                // 入力内容が空でない場合の処理
-                //データの入力
-                adddataTable.Rows.Add(name.Text, 0);
-
-                //表に反映
-                ScheduleDis.DataSource = adddataTable;
-            }
-            else
-            {
-                // 入力内容が空の場合の処理
-                MessageBox.Show("やることを入力してください");
-            }
-
-            */
 
         }
 
@@ -752,8 +684,6 @@ namespace kozintest01
                 //選択されずにボタンを押されたとき
                 MessageBox.Show("削除する行を選択してください。");
             }
-
-
             //フォーカスをテキストボックスに変更
             nameTextbox.Focus();
         }
@@ -768,8 +698,7 @@ namespace kozintest01
             System.Diagnostics.Process.Start(url);
         }
 
-
-        //formを作る
+        //formを作るボタン
         public void NewFormButton_Click(object sender, EventArgs e)
         {
             //ボタンを無効にすることでformの無限生成を止める
@@ -814,9 +743,6 @@ namespace kozintest01
             // フォームの最大化ボタンと最小化ボタンを非表示にする
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-
-            //テキストボックスにフォーカス
-            timetextBox.Focus();
         }
 
         //テキストボックスの設定
@@ -870,7 +796,6 @@ namespace kozintest01
         //ボタンを押すとタイマーの制御
         private void TimeButton_Click(object sender, EventArgs e)
         {
-
             //入力されていないか0以下なら
             if (string.IsNullOrEmpty(timetextBox.Text) || int.Parse(timetextBox.Text) <= 0)
             {
@@ -942,17 +867,15 @@ namespace kozintest01
         {
             //formの設定呼び出し
             SetForm();
-
             //タイマーの設定呼び出し
             AratSetTimer();
-
             //タイマーボタンの設定呼び出し
             TimeButton();
-
             //テキストボックスの呼び出し
             SetTimeText();
 
-
+            //テキストボックスにフォーカス
+            timetextBox.Focus();
         }
 
 
