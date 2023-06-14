@@ -519,7 +519,7 @@ namespace kozintest01
             this.Controls.Add(this.LinkButton);
         }
 
-        //formを開く作るボタンの設定
+        //アラームformを開く作るボタンの設定
         public void SetNewFormButton()
         {
             NewFormButton = new System.Windows.Forms.Button();
@@ -527,12 +527,12 @@ namespace kozintest01
             NewFormButton.FlatAppearance.BorderSize = 0;
 
             //ボタンの色
-            NewFormButton.BackColor = Color.Silver;
+            NewFormButton.BackColor = Color.OrangeRed;
             NewFormButton.FlatAppearance.MouseOverBackColor = Color.Gray;
             NewFormButton.FlatAppearance.MouseDownBackColor = Color.WhiteSmoke;
 
-            this.NewFormButton.Name = "Deltime";
-            this.NewFormButton.Text = "＜";
+            this.NewFormButton.Name = "Formbutton";
+            this.NewFormButton.Text = "⌚";
             this.NewFormButton.Font = new Font("UTF-8", 10);
             this.NewFormButton.TextAlign = ContentAlignment.MiddleCenter;
 
@@ -792,7 +792,7 @@ namespace kozintest01
     //新たなform
     public class AddForm : Form
     {
-        //タイマーの定義
+        //タイマー
         private Timer AratTimer;
         //ボタン
         private Button timeButton;
@@ -803,7 +803,7 @@ namespace kozintest01
         //formの設定
         public void SetForm()
         {
-            this.Text = "arat";
+            this.Text = "アラーム(秒)";
             //フォーム背景色指定
             this.BackColor = Color.Orange;
 
@@ -811,9 +811,12 @@ namespace kozintest01
             this.Width = 150;
             this.Height = 150;
 
-            //form拡大縮小の指定
-            this.MaximumSize = new Size(150, 150);
-            this.MinimumSize = new Size(150, 150);
+            // フォームの最大化ボタンと最小化ボタンを非表示にする
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+
+            //テキストボックスにフォーカス
+            timetextBox.Focus();
         }
 
         //テキストボックスの設定
@@ -825,10 +828,13 @@ namespace kozintest01
             timetextBox.Width = 100;
             timetextBox.Height = 50;
             timetextBox.Font = new Font("UTF-8",10);
+            //文字の右寄せ
+            timetextBox.TextAlign = HorizontalAlignment.Right;
 
-
+            //位置
             timetextBox.Location = new Point(25,50);
 
+            //キーボードが押された時の判定(数字のみ可)
             timetextBox.KeyPress += NumericTextBox_KeyPress; // KeyPressイベントハンドラを追加
             //form
             Controls.Add(timetextBox);
@@ -931,7 +937,7 @@ namespace kozintest01
 
         }
 
-
+        //表示主に関数で制御
         public AddForm()
         {
             //formの設定呼び出し
